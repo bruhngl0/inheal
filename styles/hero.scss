@@ -1,0 +1,16 @@
+.hero{
+ position: relative;
+
+}
+
+.hero-main{
+
+}
+
+.hero-overlay{
+position: absolute;
+top: 50%;
+width: 50vw;
+left: 50%;
+transform: translate(-50%, -50%);
+}

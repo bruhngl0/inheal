@@ -1,0 +1,87 @@
+
+
+@font-face {
+font-family: 'agatho'; /* Name you'll use in CSS */
+src: url('../public/fonts/Agatho_Regular.otf') format('otf');
+font-weight: normal;
+font-style: normal;
+}
+
+
+@font-face { font-family: 'roundark';
+  src: url('../public/fonts/Roundark.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+
+
+
+
+.faq-main{
+ background-color: #FFF5CA;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ color: #918A43;
+ font-family: agatho;
+}
+
+.faq-head{
+  >h1{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    font-family: roundark;
+  }
+}
+
+.faq-container{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+
+  background-color: #918a43;
+  border-radius: 10px;
+  color: #fff5ca;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.faq-c-head{
+  padding: 10px;
+  font-size: 1.2rem;
+  line-height: 1em;
+}
+
+.faq-c-des{
+  padding: 0 0 16px 16px;
+line-height: 1em;
+font-size: 0.8rem;
+font-family: helvetica;
+
+}
+
+.faq-test{
+  margin: 2rem;
+  background-color: #918a43;
+  border-radius: 10px;
+  color: #fff5ca;
+  margin-top: 6rem;  
+  line-height: 1em;
+}
+
+
+.faq-test-name{
+  padding: 1rem; 
+}
+
+.faq-test-para{
+  padding: 1rem;
+}

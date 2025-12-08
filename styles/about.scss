@@ -1,0 +1,77 @@
+
+
+
+
+
+@font-face {
+  font-family: 'agatho'; /* Name you'll use in CSS */
+  src: url('../public/fonts/Agatho_Regular.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'roundark'; /* Name you'll use in CSS */
+  src: url('../public/fonts/Roundark.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.about{
+  height: auto;
+  background-color: #FFF5CA;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #918A43;
+  
+}
+
+.about-main{
+ background-color: #FFF5CA; 
+ display: flex;
+ flex-direction: column;
+ justify-content:center;
+ align-items: center;
+
+ }
+
+.about-main-img{
+  width: 75%; 
+  margin-top: 2rem;
+}
+
+.about-main-des{
+ background-color: #FFF5CA;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ padding: 1rem;
+  color: #918A43;}
+
+.about-main-des-head{
+  background-color: #FFF5CA;
+ 
+
+  >h1{
+    font-size: 2rem;
+font-family: roundark;
+
+  }
+}
+
+
+.about-main-des-des{
+  background-color: #FFF5CA;
+
+  >p{
+    text-align: center;
+    font-family: agatho;
+    line-height: 1em;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+}

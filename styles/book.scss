@@ -1,0 +1,53 @@
+@font-face {
+font-family: 'agatho'; /* Name you'll use in CSS */
+src: url('../public/fonts/Agatho_Regular.otf') format('otf');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face { font-family: 'roundark';
+  src: url('../public/fonts/Roundark.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.booking-main{
+  background-color: #918A43;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: agatho;
+}
+
+
+.booking-heading{
+  color: #FFF5CA;
+
+  >h1{
+    font-size: 2rem;
+    font-style: roundark;
+  }
+}
+
+
+.booking-des{
+  color: #FFF5CA;
+
+  >p{
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1em;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.booking-form{
+  padding: 2rem;
+  background-color: #fff5ca;
+  color: #918A43;
+  border-radius: 10px;
+}

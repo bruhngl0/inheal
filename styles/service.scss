@@ -1,0 +1,315 @@
+@font-face { font-family: 'agatho';
+  src: url('../public/fonts/Agatho_Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face { font-family: 'roundark';
+  src: url('../public/fonts/Roundark.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.service {
+  max-width: 100vw;
+  background-color: #FFF5CA;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'agatho', serif;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 3rem;
+}
+
+.service-head {
+  color: #918A43;
+  padding: 2rem 2rem 1rem 2rem;
+  text-align: center;
+}
+
+.service-head h1 {
+  font-size: 2rem;
+  font-weight: normal;
+  margin: 0;
+  letter-spacing: 1px;
+  font-family: roundark;
+
+}
+
+//==============================
+
+/* Decorative Elements */
+.purple-spiral {
+  position: absolute;
+  width:120px;
+  height:115px;
+  top: 22%;
+  right: 3%;
+  z-index: 10;
+  opacity: 0.9;
+  
+  transform: scale(0.5);
+}
+
+//=========================
+
+.pink-fish {
+  position: absolute;
+  top: 63%;
+  right: 55%;
+  z-index: 10;
+  opacity: 0.8;
+  transform: scale(0.4)
+}
+
+//====================
+
+.blue-star {
+  position: absolute;
+  top: 85%;
+  right: -5%;
+  z-index: 10;
+  opacity: 0.85;
+  transform: scale(0.4)
+}
+
+
+//========================
+.purple-small{
+  position: absolute;
+  
+  bottom: -1%;
+  right: 58%;
+  z-index: 10;
+  opacity: 0.8;
+ 
+ transform: scale(0.4)
+}
+
+//============================
+.yellow-star{
+  position: absolute;
+
+  bottom: 43%;
+  left: 47%;
+  z-index: 10;
+  opacity: 0.8;
+  transform: scale(0.4)
+}
+
+//=======================
+.purple-leaf{
+  position: absolute;
+
+  bottom: 65%;
+  right: 52%;
+  z-index: 10;
+  opacity: 0.8;
+ 
+  transform: scale(0.5)
+}
+
+//=============================
+.pink-paw{
+  position: absolute;
+    bottom: 90%;
+  left: 57%;
+  z-index: 10;
+  opacity: 0.8;
+  transform: scale(0.4);
+}
+
+
+//====================================
+/* Service Images Section */
+.service-img {
+  background-color: #FFF5CA;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+
+}
+
+.service-img-1 {
+ 
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+   padding: 4rem 4rem;
+
+
+
+}
+
+.circle-bg {
+  width: 380px;
+  height: 380px;
+  position: absolute;
+
+}
+
+/* Individual circle adjustments for organic shapes */
+.circle-1 {
+  width: 400px;
+
+}
+
+.circle-2 {
+  width: 400px;
+}
+
+.circle-3 {
+  width: 390px;
+}
+
+.circle-4 {
+  width: 385px;
+}
+
+.service-img-rel {
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  color: #FFF5CA;
+  max-width: 340px;
+  padding: 2rem 1.5rem;
+}
+
+.service-img-rel h2 {
+  font-size: 2rem;
+  font-weight: normal;
+  margin: 0 0 1rem 0;
+}
+
+.service-img-rel h3 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+.service-img-rel p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  color: #FFF5CA;
+}
+
+/* Service Description */
+.service-des {
+  color: #2C2C2C;
+  max-width: 600px;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.service-des p {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  text-align: center;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .service-head h1 {
+    font-size: 2rem;
+  }
+
+  .circle-bg {
+    width: 320px;
+    height: 320px;
+  }
+
+  .circle-2 {
+    width: 340px;
+    height: 340px;
+  }
+
+  .circle-3, .circle-4 {
+    width: 330px;
+    height: 330px;
+  }
+
+  .service-img-rel {
+    max-width: 280px;
+    padding: 1.5rem 1rem;
+  }
+
+  .service-img-rel h2 {
+    font-size: 2rem;
+  }
+
+  .service-img-rel h3 {
+    font-size: 2rem;
+  }
+
+  .service-img-rel p {
+    font-size: 1.3rem;
+  }
+
+  .deco-arrow, .deco-starfish {
+    width: 60px;
+    height: 60px;
+  }
+
+  .deco-leaf-top, .deco-leaf-bottom {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .circle-bg {
+    width: 330px;
+    height: 360px;
+  }
+
+  .circle-2 {
+    width: 330px;
+    height: 360px;
+  }
+
+  .circle-3, .circle-4 {
+    width: 330px;
+    height: 360px;
+  }
+
+  .service-img-rel {
+    max-width: 240px;
+  }
+
+  .service-img-rel h2 {
+    font-size: 1.8rem;
+  }
+
+  .service-img-rel h3 {
+    font-size: 1.6rem;
+    line-height: 1em;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    margin-block-end: 0em;
+    margin-block-start: 0em;
+   
+  }
+
+  .service-img-rel p {
+    font-size: 1rem;
+    line-height: 1em;
+  }
+
+  .service-des p {
+    font-size: 1rem;
+  }
+}

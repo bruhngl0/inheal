@@ -1,0 +1,64 @@
+
+
+
+
+
+
+@font-face {
+font-family: 'agatho'; /* Name you'll use in CSS */
+src: url('../public/fonts/Agatho_Regular.otf') format('otf');
+font-weight: normal;
+font-style: normal;
+}
+
+
+
+
+
+.footer-main{
+  background-color: #918a43;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: agatho;
+}
+
+
+.footer-logo{
+  >img{
+    width: 100px;
+    margin-top: 20px;
+  }
+}
+
+.footer-des{
+  margin-top: 1rem;
+  border-bottom: 1px solid white;
+
+  >p{
+    padding: 1rem;
+    
+  }
+}
+
+.footer-number{
+  padding-top: 1rem;
+}
+
+
+.footer-icons{
+  display: flex;
+}
+
+
+.icons{
+  width: 40px;
+  padding: 2px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.copyright{
+  margin-bottom: 1rem;
+}
