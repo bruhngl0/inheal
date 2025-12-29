@@ -1,19 +1,80 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import "../styles/book.scss";
+import { BookingFormData } from "@/types";
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 const Book = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BookingFormData>({
     name: "",
     email: "",
     age: "",
     phone: "",
     service: "",
+    booking_date: "",
+    booking_time: "",
     preferredTime: "",
   });
 
-  const handleInputChange = (e) => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+
+  // Available time slots
+  const timeSlots = [
+    { value: "09:00", label: "9:00 AM" },
+    { value: "10:00", label: "10:00 AM" },
+    { value: "11:00", label: "11:00 AM" },
+    { value: "12:00", label: "12:00 PM" },
+    { value: "13:00", label: "1:00 PM" },
+    { value: "14:00", label: "2:00 PM" },
+    { value: "15:00", label: "3:00 PM" },
+    { value: "16:00", label: "4:00 PM" },
+    { value: "17:00", label: "5:00 PM" },
+    { value: "18:00", label: "6:00 PM" },
+  ];
+
+  // Load Razorpay script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => {
+      setRazorpayLoaded(true);
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  // Fetch booked slots when date changes
+  useEffect(() => {
+    if (selectedDate) {
+      const dateStr = selectedDate.toISOString().split('T')[0];
+      fetch(`/api/bookings?date=${dateStr}`)
+        .then(res => res.json())
+        .then(data => {
+          setBookedSlots(data.bookedSlots || []);
+        })
+        .catch(err => {
+          console.error('Error fetching booked slots:', err);
+          setBookedSlots([]);
+        });
+    }
+  }, [selectedDate]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -21,17 +82,173 @@ const Book = () => {
     }));
   };
 
-  const handleTimeSelect = (time) => {
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDate(date);
+    if (date) {
+      const dateStr = date.toISOString().split('T')[0];
+      setFormData((prev) => ({
+        ...prev,
+        booking_date: dateStr,
+      }));
+      // Reset time when date changes
+      setFormData((prev) => ({
+        ...prev,
+        booking_time: "",
+      }));
+    }
+  };
+
+  const handleTimeSelect = (time: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      booking_time: time,
+    }));
+  };
+
+  const handlePreferredTimeSelect = (time: string) => {
     setFormData((prev) => ({
       ...prev,
       preferredTime: time,
     }));
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", formData);
-    alert("Booking session requested! Check console for details.");
+  const handleSubmit = async () => {
+    // Validation
+    if (!formData.name || !formData.email || !formData.service || !formData.booking_date || !formData.booking_time) {
+      alert("Please fill in all required fields including date and time.");
+      return;
+    }
+
+    if (!razorpayLoaded) {
+      alert("Payment gateway is loading. Please wait a moment and try again.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Step 1: Create booking
+      const bookingResponse = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const bookingData = await bookingResponse.json();
+
+      if (!bookingResponse.ok) {
+        alert(bookingData.error || "Failed to create booking. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      const bookingId = bookingData.booking.id;
+
+      // Step 2: Create payment order
+      const orderResponse = await fetch('/api/payment/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bookingId: bookingId,
+          service: formData.service,
+        }),
+      });
+
+      const orderData = await orderResponse.json();
+
+      if (!orderResponse.ok) {
+        alert(orderData.error || "Failed to create payment order. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Step 3: Open Razorpay checkout
+      const options = {
+        key: orderData.order.key,
+        amount: orderData.order.amount,
+        currency: orderData.order.currency,
+        name: 'Inheal',
+        description: `Booking for ${formData.service}`,
+        order_id: orderData.order.id,
+        handler: async function (response: any) {
+          try {
+            // Step 4: Verify payment
+            const verifyResponse = await fetch('/api/payment/verify', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                booking_id: bookingId,
+              }),
+            });
+
+            const verifyData = await verifyResponse.json();
+
+            if (verifyResponse.ok) {
+              alert("Payment successful! Booking confirmed. A confirmation email has been sent to your email address.");
+              // Reset form
+              setFormData({
+                name: "",
+                email: "",
+                age: "",
+                phone: "",
+                service: "",
+                booking_date: "",
+                booking_time: "",
+                preferredTime: "",
+              });
+              setSelectedDate(undefined);
+              setBookedSlots([]);
+            } else {
+              alert(verifyData.error || "Payment verification failed. Please contact support.");
+            }
+          } catch (error) {
+            console.error('Error verifying payment:', error);
+            alert("An error occurred during payment verification. Please contact support.");
+          } finally {
+            setIsSubmitting(false);
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone || '',
+        },
+        theme: {
+          color: '#918a43',
+        },
+        modal: {
+          ondismiss: function() {
+            setIsSubmitting(false);
+          },
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+      razorpay.on('payment.failed', function (response: any) {
+        alert(`Payment failed: ${response.error.description}`);
+        setIsSubmitting(false);
+      });
+
+    } catch (error) {
+      console.error('Error submitting booking:', error);
+      alert("An error occurred. Please try again.");
+      setIsSubmitting(false);
+    }
   };
+
+  // Disable past dates
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   return (
     <div className="booking-main">
@@ -69,6 +286,7 @@ const Book = () => {
                 color: "#4A4A4A",
                 fontFamily: "serif",
               }}
+              required
             />
           </div>
 
@@ -85,6 +303,7 @@ const Book = () => {
                 color: "#4A4A4A",
                 fontFamily: "serif",
               }}
+              required
             />
           </div>
 
@@ -126,21 +345,13 @@ const Book = () => {
         <div className="booking-form-service">
           {/* Service Dropdown */}
           <div className="mb-6">
-            <label>Preferred Service</label>
+            <label className="font-bold text-lg">Preferred Service</label>
             <select
               name="service"
               value={formData.service}
               onChange={handleInputChange}
-              className="w-full text-lg font-serif p-3 rounded outline-none"
-              style={{
-                backgroundColor: "#918a43",
-                color: "#F5E6B3",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
+              className="booking-pref"
+              required
             >
               <option value="">Select your service</option>
               <option value="consultation">Consultation</option>
@@ -153,22 +364,96 @@ const Book = () => {
 
         {/* ======================================================================================================================================*/}
 
+        {/* Calendar Section */}
+        <div className="booking-calendar mb-8">
+          <label
+            className="font-bold text-lg mb-4 block"
+            style={{
+              color: "#918a43",
+            }}
+          >
+            Select Date
+          </label>
+          <div className="flex justify-center">
+            <DayPicker
+              mode="single"
+              selected={selectedDate}
+              onSelect={handleDateSelect}
+              disabled={{ before: today }}
+              className="rounded-lg p-4"
+              styles={{
+                root: {
+                  fontFamily: "serif",
+                },
+                day_selected: {
+                  backgroundColor: "#918a43",
+                  color: "#f5e6b3",
+                },
+                day_today: {
+                  fontWeight: "bold",
+                },
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Time Slots Section */}
+        {selectedDate && (
+          <div className="booking-time mb-8">
+            <label
+              className="font-bold text-lg mb-4 block"
+              style={{
+                color: "#918a43",
+              }}
+            >
+              Select Time
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {timeSlots.map((slot) => {
+                const isBooked = bookedSlots.includes(slot.value);
+                const isSelected = formData.booking_time === slot.value;
+                return (
+                  <button
+                    key={slot.value}
+                    type="button"
+                    onClick={() => !isBooked && handleTimeSelect(slot.value)}
+                    disabled={isBooked}
+                    className={`p-3 rounded text-left transition-all ${
+                      isBooked
+                        ? "opacity-50 cursor-not-allowed bg-gray-200"
+                        : isSelected
+                        ? "bg-[#5A7C8A] text-white"
+                        : "bg-transparent border-2 border-[#918a43] hover:bg-[#918a43] hover:text-[#f5e6b3]"
+                    }`}
+                    style={{
+                      fontFamily: "serif",
+                      color: isBooked ? "#999" : isSelected ? "#fff" : "#918a43",
+                    }}
+                  >
+                    {slot.label}
+                    {isBooked && <span className="block text-xs mt-1">Booked</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ======================================================================================================================================*/}
+
         <div className="booking-time">
           <div className="mb-8">
             <label
-              className="block text-lg font-serif mb-4"
+              className="font-bold text-lg"
               style={{
-                color: "#8B8662",
-                border: "2px dotted #8B8662",
+                color: "#918a43",
                 display: "inline-block",
-                padding: "4px 8px",
-                backgroundColor: "#F5E6B3",
               }}
             >
-              Select your preferred time
+              Preferred Time of Day (Optional)
             </label>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mt-5 ">
               {[
                 { value: "weekday-evening", label: "Weekday evening" },
                 { value: "weekday-morning", label: "Weekday morning" },
@@ -178,13 +463,12 @@ const Book = () => {
                 <div
                   key={option.value}
                   className="flex items-center cursor-pointer"
-                  onClick={() => handleTimeSelect(option.value)}
+                  onClick={() => handlePreferredTimeSelect(option.value)}
                 >
                   <div
-                    className="w-8 h-8 rounded-sm flex items-center justify-center mr-3"
+                    className="w-5 h-5 rounded-sm flex items-center justify-center mr-1 "
                     style={{
-                      backgroundColor: "#9B956A",
-                      border: "3px solid #5A7C8A",
+                      border: "2px solid #918a43",
                     }}
                   >
                     {formData.preferredTime === option.value && (
@@ -197,10 +481,10 @@ const Book = () => {
                   <span
                     className="text-base font-serif"
                     style={{
-                      color: "#5A7C8A",
-                      border: "2px dotted #5A7C8A",
+                      color: "#918a43",
                       padding: "2px 6px",
-                      backgroundColor: "#F5E6B3",
+                      fontSize: "12px",
+                      lineHeight: "1em",
                     }}
                   >
                     {option.label}
@@ -221,15 +505,15 @@ const Book = () => {
           >
             <button
               onClick={handleSubmit}
-              className="w-full text-xl font-serif py-4 rounded transition-all duration-300 hover:opacity-90"
+              disabled={isSubmitting}
+              className="w-full text-sl font-serif py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
               style={{
-                backgroundColor: "#F5E6B3",
-                color: "#8B8662",
-                border: "3px dotted #8B8662",
-                letterSpacing: "0.1em",
+                backgroundColor: "#918a43",
+                color: "#f5e6b3",
+                letterSpacing: "",
               }}
             >
-              BOOK SESSION
+              {isSubmitting ? "SUBMITTING..." : "BOOK SESSION"}
             </button>
           </div>
 

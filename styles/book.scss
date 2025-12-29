@@ -51,3 +51,46 @@ font-style: normal;
   color: #918A43;
   border-radius: 10px;
 }
+
+.booking-pref{
+  width: 100%;
+  height: 2rem;
+  background-color: #918a43;
+  color: #F5E6B3;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+}
+
+.booking-calendar {
+  .rdp {
+    --rdp-cell-size: 40px;
+    --rdp-accent-color: #918a43;
+    --rdp-background-color: #f5e6b3;
+    --rdp-accent-color-dark: #5A7C8A;
+    --rdp-background-color-dark: #f5e6b3;
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    --rdp-outline-selected: 3px solid var(--rdp-accent-color);
+    margin: 0 auto;
+  }
+
+  .rdp-day_selected {
+    background-color: #918a43 !important;
+    color: #f5e6b3 !important;
+  }
+
+  .rdp-day:hover:not([disabled]) {
+    background-color: #918a43;
+    color: #f5e6b3;
+  }
+}
+
+.booking-time {
+  .time-slot-button {
+    font-family: agatho;
+  }
+}
