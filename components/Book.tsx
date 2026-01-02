@@ -21,7 +21,6 @@ const Book = () => {
     service: "",
     booking_date: "",
     booking_time: "",
-    preferredTime: "",
   });
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -45,8 +44,8 @@ const Book = () => {
 
   // Load Razorpay script
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     script.onload = () => {
       setRazorpayLoaded(true);
@@ -61,20 +60,22 @@ const Book = () => {
   // Fetch booked slots when date changes
   useEffect(() => {
     if (selectedDate) {
-      const dateStr = selectedDate.toISOString().split('T')[0];
+      const dateStr = selectedDate.toISOString().split("T")[0];
       fetch(`/api/bookings?date=${dateStr}`)
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           setBookedSlots(data.bookedSlots || []);
         })
-        .catch(err => {
-          console.error('Error fetching booked slots:', err);
+        .catch((err) => {
+          console.error("Error fetching booked slots:", err);
           setBookedSlots([]);
         });
     }
   }, [selectedDate]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -85,7 +86,7 @@ const Book = () => {
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = date.toISOString().split("T")[0];
       setFormData((prev) => ({
         ...prev,
         booking_date: dateStr,
@@ -112,9 +113,69 @@ const Book = () => {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handlePayLater = async () => {
     // Validation
-    if (!formData.name || !formData.email || !formData.service || !formData.booking_date || !formData.booking_time) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.service ||
+      !formData.booking_date ||
+      !formData.booking_time
+    ) {
+      alert("Please fill in all required fields including date and time.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Create booking with payment_status = 'pending'
+      const bookingResponse = await fetch("/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const bookingData = await bookingResponse.json();
+
+      if (bookingResponse.ok) {
+        alert("Booked successfully! You can pay later.");
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          age: "",
+          phone: "",
+          service: "",
+          booking_date: "",
+          booking_time: "",
+        });
+        setSelectedDate(undefined);
+        setBookedSlots([]);
+      } else {
+        alert(
+          bookingData.error || "Failed to create booking. Please try again.",
+        );
+      }
+    } catch (error) {
+      console.error("Error creating booking:", error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handlePayNow = async () => {
+    // Validation
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.service ||
+      !formData.booking_date ||
+      !formData.booking_time
+    ) {
       alert("Please fill in all required fields including date and time.");
       return;
     }
@@ -128,10 +189,10 @@ const Book = () => {
 
     try {
       // Step 1: Create booking
-      const bookingResponse = await fetch('/api/bookings', {
-        method: 'POST',
+      const bookingResponse = await fetch("/api/bookings", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -139,7 +200,9 @@ const Book = () => {
       const bookingData = await bookingResponse.json();
 
       if (!bookingResponse.ok) {
-        alert(bookingData.error || "Failed to create booking. Please try again.");
+        alert(
+          bookingData.error || "Failed to create booking. Please try again.",
+        );
         setIsSubmitting(false);
         return;
       }
@@ -147,10 +210,10 @@ const Book = () => {
       const bookingId = bookingData.booking.id;
 
       // Step 2: Create payment order
-      const orderResponse = await fetch('/api/payment/create-order', {
-        method: 'POST',
+      const orderResponse = await fetch("/api/payment/create-order", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           bookingId: bookingId,
@@ -161,7 +224,10 @@ const Book = () => {
       const orderData = await orderResponse.json();
 
       if (!orderResponse.ok) {
-        alert(orderData.error || "Failed to create payment order. Please try again.");
+        alert(
+          orderData.error ||
+            "Failed to create payment order. Please try again.",
+        );
         setIsSubmitting(false);
         return;
       }
@@ -171,16 +237,16 @@ const Book = () => {
         key: orderData.order.key,
         amount: orderData.order.amount,
         currency: orderData.order.currency,
-        name: 'Inheal',
+        name: "Inheal",
         description: `Booking for ${formData.service}`,
         order_id: orderData.order.id,
         handler: async function (response: any) {
           try {
             // Step 4: Verify payment
-            const verifyResponse = await fetch('/api/payment/verify', {
-              method: 'POST',
+            const verifyResponse = await fetch("/api/payment/verify", {
+              method: "POST",
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
               },
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,
@@ -193,7 +259,9 @@ const Book = () => {
             const verifyData = await verifyResponse.json();
 
             if (verifyResponse.ok) {
-              alert("Payment successful! Booking confirmed. A confirmation email has been sent to your email address.");
+              alert(
+                "Payment successful! Booking confirmed. A confirmation email has been sent to your email address.",
+              );
               // Reset form
               setFormData({
                 name: "",
@@ -203,16 +271,20 @@ const Book = () => {
                 service: "",
                 booking_date: "",
                 booking_time: "",
-                preferredTime: "",
               });
               setSelectedDate(undefined);
               setBookedSlots([]);
             } else {
-              alert(verifyData.error || "Payment verification failed. Please contact support.");
+              alert(
+                verifyData.error ||
+                  "Payment verification failed. Please contact support.",
+              );
             }
           } catch (error) {
-            console.error('Error verifying payment:', error);
-            alert("An error occurred during payment verification. Please contact support.");
+            console.error("Error verifying payment:", error);
+            alert(
+              "An error occurred during payment verification. Please contact support.",
+            );
           } finally {
             setIsSubmitting(false);
           }
@@ -220,13 +292,13 @@ const Book = () => {
         prefill: {
           name: formData.name,
           email: formData.email,
-          contact: formData.phone || '',
+          contact: formData.phone || "",
         },
         theme: {
-          color: '#918a43',
+          color: "#918a43",
         },
         modal: {
-          ondismiss: function() {
+          ondismiss: function () {
             setIsSubmitting(false);
           },
         },
@@ -234,13 +306,12 @@ const Book = () => {
 
       const razorpay = new window.Razorpay(options);
       razorpay.open();
-      razorpay.on('payment.failed', function (response: any) {
+      razorpay.on("payment.failed", function (response: any) {
         alert(`Payment failed: ${response.error.description}`);
         setIsSubmitting(false);
       });
-
     } catch (error) {
-      console.error('Error submitting booking:', error);
+      console.error("Error submitting booking:", error);
       alert("An error occurred. Please try again.");
       setIsSubmitting(false);
     }
@@ -422,16 +493,22 @@ const Book = () => {
                       isBooked
                         ? "opacity-50 cursor-not-allowed bg-gray-200"
                         : isSelected
-                        ? "bg-[#5A7C8A] text-white"
-                        : "bg-transparent border-2 border-[#918a43] hover:bg-[#918a43] hover:text-[#f5e6b3]"
+                          ? "bg-[#5A7C8A] text-white"
+                          : "bg-transparent border-2 border-[#918a43] hover:bg-[#918a43] hover:text-[#f5e6b3]"
                     }`}
                     style={{
                       fontFamily: "serif",
-                      color: isBooked ? "#999" : isSelected ? "#fff" : "#918a43",
+                      color: isBooked
+                        ? "#999"
+                        : isSelected
+                          ? "#fff"
+                          : "#918a43",
                     }}
                   >
                     {slot.label}
-                    {isBooked && <span className="block text-xs mt-1">Booked</span>}
+                    {isBooked && (
+                      <span className="block text-xs mt-1">Booked</span>
+                    )}
                   </button>
                 );
               })}
@@ -441,60 +518,6 @@ const Book = () => {
 
         {/* ======================================================================================================================================*/}
 
-        <div className="booking-time">
-          <div className="mb-8">
-            <label
-              className="font-bold text-lg"
-              style={{
-                color: "#918a43",
-                display: "inline-block",
-              }}
-            >
-              Preferred Time of Day (Optional)
-            </label>
-
-            <div className="grid grid-cols-2 gap-4 mt-5 ">
-              {[
-                { value: "weekday-evening", label: "Weekday evening" },
-                { value: "weekday-morning", label: "Weekday morning" },
-                { value: "weekend-morning", label: "Weekend morning" },
-                { value: "weekend-evening", label: "Weekend evening" },
-              ].map((option) => (
-                <div
-                  key={option.value}
-                  className="flex items-center cursor-pointer"
-                  onClick={() => handlePreferredTimeSelect(option.value)}
-                >
-                  <div
-                    className="w-5 h-5 rounded-sm flex items-center justify-center mr-1 "
-                    style={{
-                      border: "2px solid #918a43",
-                    }}
-                  >
-                    {formData.preferredTime === option.value && (
-                      <div
-                        className="w-4 h-4 rounded-sm"
-                        style={{ backgroundColor: "#5A7C8A" }}
-                      ></div>
-                    )}
-                  </div>
-                  <span
-                    className="text-base font-serif"
-                    style={{
-                      color: "#918a43",
-                      padding: "2px 6px",
-                      fontSize: "12px",
-                      lineHeight: "1em",
-                    }}
-                  >
-                    {option.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         <div className="booking-cta">
           <div
             style={{
@@ -503,18 +526,33 @@ const Book = () => {
               paddingTop: "24px",
             }}
           >
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="w-full text-sl font-serif py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-              style={{
-                backgroundColor: "#918a43",
-                color: "#f5e6b3",
-                letterSpacing: "",
-              }}
-            >
-              {isSubmitting ? "SUBMITTING..." : "BOOK SESSION"}
-            </button>
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={handlePayNow}
+                disabled={isSubmitting}
+                className="w-full text-sl font-serif py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                style={{
+                  backgroundColor: "#918a43",
+                  color: "#f5e6b3",
+                  letterSpacing: "",
+                }}
+              >
+                {isSubmitting ? "PROCESSING..." : "PAY NOW"}
+              </button>
+
+              <button
+                onClick={handlePayLater}
+                disabled={isSubmitting}
+                className="w-full text-sl font-serif py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                style={{
+                  backgroundColor: "#5A7C8A",
+                  color: "#f5e6b3",
+                  letterSpacing: "",
+                }}
+              >
+                {isSubmitting ? "PROCESSING..." : "PAY LATER"}
+              </button>
+            </div>
           </div>
 
           {/* ======================================================================================================================================*/}

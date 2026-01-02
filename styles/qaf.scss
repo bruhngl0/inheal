@@ -1,0 +1,168 @@
+@font-face {
+  font-family: 'agatho'; /* Name you'll use in CSS */
+  src: url('../public/fonts/Agatho_Regular.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'roundark'; /* Name you'll use in CSS */
+  src: url('../public/fonts/Roundark.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+.qaf-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: #FFF5CA;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.qaf-container-main{
+
+  width: 70%;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  >h2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+ 
+}
+
+@media(max-width: 768px){
+  .qaf-container-main{
+    width: 90%;
+  }
+}
+
+.qaf-title {
+  font-size: 24px;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  color: #918A43;
+  
+}
+
+.qaf-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #918a43;
+}
+
+/* Each item is a two-column grid: question on the left, + toggle aligned right (inside the button) */
+.qaf-item {
+  border-bottom: 1px solid #2d4d31;
+  
+  &:last-child {
+    border-bottom: none;
+    
+  }
+}
+
+.qaf-row {
+  display: grid;
+  grid-template-columns: 1fr; /* question spans full width; + is inside the button aligned right */
+}
+
+.qaf-question {
+  margin: 0;
+}
+
+.qaf-toggle {
+  /* full-row clickable */
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: #2d4d31;
+
+  /* typography */
+  font: inherit;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: 16px;
+
+  /* focus styles for a11y */
+  outline: none;
+  &:focus-visible {
+    
+    border-radius: 8px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.qaf-question-text {
+  padding-right: 1rem; /* breathing room from the + */
+  color: #918a43;
+  
+}
+
+.qaf-plus {
+  font-size: 1.5rem;
+  line-height: 1;
+  user-select: none;
+  transform: translateY(1px);
+}
+
+/* Animated answer reveal */
+.qaf-answer {
+  overflow: hidden;
+  transition: max-height 260ms ease, opacity 220ms ease;
+  opacity: 0;
+  will-change: max-height, opacity;
+  p {
+    margin: 0.75rem 0 1rem;
+    color: #918a43;
+    line-height: 1.6;
+    font-size: 16px;
+    
+  }
+}
+
+/* When open, fade in content */
+.qaf-item.open .qaf-answer {
+  opacity: 1;
+ 
+}
+
+/* Optional: subtle hover affordance */
+.qaf-toggle:hover .qaf-question-text {
+  text-decoration: none;
+}
+
+/* Responsive polish */
+@media (min-width: 768px) {
+  .qaf-title {
+    font-size: 2.25rem;
+  }
+  .qaf-toggle {
+    padding: 1.1rem 0;
+  }
+}

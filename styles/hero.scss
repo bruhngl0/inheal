@@ -1,16 +1,44 @@
 .hero{
- position: relative;
-
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .hero-main{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
 
+.hero-mobile{
+  display: block;
+  
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
+
+.hero-desktop{
+  display: none;
+  
+  @media (min-width: 769px) {
+    display: block;
+  }
 }
 
 .hero-overlay{
-position: absolute;
-top: 50%;
-width: 50vw;
-left: 50%;
-transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  width: 50vw;
+  max-width: 600px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+
+  @media (max-width: 768px) {
+    width: 80vw;
+    max-width: 400px;
+  }
 }

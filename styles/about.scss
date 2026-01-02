@@ -27,6 +27,13 @@
   align-items: center;
   color: #918A43;
   
+  
+}
+
+@media (min-width: 769px) {
+  .about{
+    display: none;
+  }
 }
 
 .about-main{
@@ -75,3 +82,142 @@ font-family: roundark;
     font-size: 1.2rem;
   }
 }
+
+.about-pc{
+  width: 100vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ background-color: #FFF5CA;
+ font-family: "agatho"
+
+ 
+}
+
+@media (max-width: 769px) {
+  .about-pc{
+    display: none;
+  }
+}
+
+
+.about-pc-img-img {
+  }
+
+.about-pc-img-img  {
+ width: 250px;
+  height: 250px;
+  object-fit: cover;
+  clip-path: url(#blob-shape);
+  display: block; 
+  margin-top: 5rem;
+
+}
+
+.about-pc-des{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #918A43;
+  margin-top: 2rem;
+}
+
+.about-pc-des-head{
+>h1{
+  font-size: 2rem;
+}
+}
+
+
+.about-pc-des-text{
+  width: 70%;
+ font-size: 1.6rem;
+ text-align: center;
+ line-height: 0.9;
+}
+
+.about-pc-des-text-p1{
+  padding: 2rem;
+  font-size: 1.6rem;
+}
+
+.about-pc-des-text-p2{
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
+ 
+}
+
+.about-pc-des-text-readmore{
+  padding: 2rem;
+  font-size: 1.6rem;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.about-pc-des-decor{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  background-color: #918A43;
+  border-radius: 20px;
+  margin-top: 4rem;
+}
+
+.about-pc-des-decor-img-container{
+  width: 100%;
+  height: auto;
+  
+}
+
+.about-pc-des-decor-text{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  color: #FFF5CA;
+  padding: 2rem;
+}
+
+.about-pc-des-decor-text-h2{
+  font-size: 2rem;
+  font-weight: normal;
+  margin: 0;
+  letter-spacing: 1px;
+  font-family: roundark;
+}
+
+.about-pc-des-decor-text-p{
+  font-size: 1.6rem;
+  font-weight: normal;
+  margin: 0;
+  letter-spacing: 1px;
+  font-family: agatho;
+  line-height: 0.9;
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
+.about-pc-des-decor-line{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.about-pc-des-decor-img{
+  width: 100%;
+  object-fit: contain;
+  padding: 2rem;
+}
+/* Corner decorations - you can add these as pseudo-elements or separate div elements */

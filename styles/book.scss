@@ -15,42 +15,90 @@ font-style: normal;
 .booking-main{
   background-color: #918A43;
   padding: 2rem;
-  display: flex;
+  display: flex; 
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: agatho;
+  margin-bottom: 4rem;
+
+}
+
+@media (max-width: 769px) {
+  .booking-main{
+   margin-bottom: 2rem; 
+  }
 }
 
 
 .booking-heading{
   color: #FFF5CA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
 
   >h1{
-    font-size: 2rem;
-    font-style: roundark;
+    font-size: 3rem;
+    font-style: agatho;
+  }
+}
+
+
+@media (max-width: 769px) {
+  .booking-heading{
+   margin-top:0;
+   margin-bottom: 0;
+
+   >h1{
+     font-size: 2rem;
+   }
   }
 }
 
 
 .booking-des{
   color: #FFF5CA;
-
+  width: 70%;
   >p{
-    font-size: 1rem;
+    font-size: 1.6rem;
     text-align: center;
     line-height: 1em;
     padding-top: 1rem;
     margin-bottom: 1rem;
+  
+  }
+}
+
+@media (max-width: 769px) {
+  .booking-des{
+   width: 100%;
+
+   >p{
+     font-size: 1rem;
+   }
   }
 }
 
 .booking-form{
+  margin-top: 2rem;
   padding: 2rem;
   background-color: #fff5ca;
   color: #918A43;
   border-radius: 10px;
+  width: 70%;
 }
+
+@media (max-width: 769px) {
+  .booking-form{
+   width: 100%;
+  }
+}
+
+
+
 
 .booking-pref{
   width: 100%;
@@ -76,6 +124,7 @@ font-style: normal;
     --rdp-outline: 2px solid var(--rdp-accent-color);
     --rdp-outline-selected: 3px solid var(--rdp-accent-color);
     margin: 0 auto;
+    padding: 1rem;
   }
 
   .rdp-day_selected {

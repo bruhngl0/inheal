@@ -23,6 +23,12 @@
   padding-bottom: 3rem;
 }
 
+@media (min-width: 769px) {
+  .service{
+    display: none;
+  }
+}
+
 .service-head {
   color: #918A43;
   padding: 2rem 2rem 1rem 2rem;

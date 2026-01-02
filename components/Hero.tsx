@@ -3,11 +3,19 @@ import "../styles/hero.scss";
 const Hero = () => {
   return (
     <div className="hero">
-      <video className="hero-main" autoPlay loop muted playsInline>
-        <source src="vid-mob.mp4" type="video/mp4" />
+      {/* Mobile Video */}
+      <video className="hero-main hero-mobile" autoPlay loop muted playsInline>
+        <source src="/vid-mob.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <img src="hero-text.png" alt="hero" className="hero-overlay" />
+      
+      {/* PC/Desktop Video */}
+      <video className="hero-main hero-desktop" autoPlay loop muted playsInline>
+        <source src="/inpc.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      
+ 
     </div>
   );
 };
