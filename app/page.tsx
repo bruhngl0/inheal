@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Servicespc from "@/components/Servicespc";
+import Blogs from "@/components/Blogs";
+
 export default function Home() {
   return (
     <>
@@ -26,6 +28,10 @@ export default function Home() {
 
       <div>
         <Faqs />
+      </div>
+
+      <div>
+        <Blogs />
       </div>
       <Footer />
     </>

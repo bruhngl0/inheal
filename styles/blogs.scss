@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'agatho'; /* Name you'll use in CSS */
+  src: url('../public/fonts/Agatho_Regular.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'roundark'; /* Name you'll use in CSS */
+  src: url('../public/fonts/Roundark.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+.blogs-main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: agatho;
+  padding-bottom: 3rem;
+
+  >h1{
+    font-size: 3rem;
+    padding: 3rem;
+  }
+}
+
+@media(max-width: 769px){
+  .blogs-main{
+    >h1{
+      font-size: 2rem;
+      padding: 1rem;
+    }
+
+  }
+}
+
+
+.blogs-img-container{
+  width: 70%;
+  background-color: #FFF5CA;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #918a43;
+
+  >p{
+    font-size: 2rem;
+    padding: 20px;
+  }
+  
+  >img{
+    padding: 1rem;
+    padding-bottom: 0;
+  }
+}
+
+
+@media(max-width: 769px){
+  .blogs-img-container{
+    width: 83%;
+
+    >p{
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }
+}
