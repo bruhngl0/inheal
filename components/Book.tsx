@@ -521,7 +521,7 @@ const Book = () => {
         <div className="booking-cta">
           <div
             style={{
-              borderTop: "3px solid #5A7C8A",
+              borderTop: "3px solid #918a43",
               marginTop: "24px",
               paddingTop: "24px",
             }}

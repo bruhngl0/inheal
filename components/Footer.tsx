@@ -28,7 +28,7 @@ const Footer = () => {
         </div>
 
         <div className="icons">
-          <img src="linkedin.png" alt="ic" />
+          <img src="ln.png" alt="ic" />
         </div>
       </div>
 

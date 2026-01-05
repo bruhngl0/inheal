@@ -47,6 +47,55 @@
 //==============================
 
 /* Decorative Elements */
+
+
+
+/* Decorative Elements with Animations */
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: scale(0.5) translate(0, 0);
+  }
+  25% {
+    transform: scale(0.5) translate(10px, -8px);
+  }
+  50% {
+    transform: scale(0.5) translate(-5px, 5px);
+  }
+  75% {
+    transform: scale(0.5) translate(8px, 3px);
+  }
+}
+
+@keyframes drift-small {
+  0%, 100% {
+    transform: scale(0.4) translate(0, 0);
+  }
+  33% {
+    transform: scale(0.4) translate(-8px, 6px);
+  }
+  66% {
+    transform: scale(0.4) translate(6px, -4px);
+  }
+}
+
+@keyframes sway-tiny {
+  0%, 100% {
+    transform: scale(0.4) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.4) translate(5px, -5px) rotate(3deg);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: scale(0.5) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.5) translate(-6px, 8px) rotate(-2deg);
+  }
+}
 .purple-spiral {
   position: absolute;
   width:120px;
@@ -54,9 +103,9 @@
   top: 22%;
   right: 3%;
   z-index: 10;
-  opacity: 0.9;
-  
+  opacity: 0.9;  
   transform: scale(0.5);
+  animation: float-gentle 8s ease-in-out infinite;
 }
 
 //=========================
@@ -67,7 +116,8 @@
   right: 55%;
   z-index: 10;
   opacity: 0.8;
-  transform: scale(0.4)
+  transform: scale(0.4);
+animation: drift-small 10s ease-in-out infinite;
 }
 
 //====================
@@ -78,7 +128,8 @@
   right: -5%;
   z-index: 10;
   opacity: 0.85;
-  transform: scale(0.4)
+  transform: scale(0.4);
+ animation: sway-tiny 7s ease-in-out infinite;
 }
 
 
@@ -90,8 +141,8 @@
   right: 58%;
   z-index: 10;
   opacity: 0.8;
- 
- transform: scale(0.4)
+ transform: scale(0.4);
+animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
 }
 
 //============================
@@ -102,7 +153,8 @@
   left: 47%;
   z-index: 10;
   opacity: 0.8;
-  transform: scale(0.4)
+  transform: scale(0.4);
+  animation: sway-tiny 11s ease-in-out infinite 2s; /* 2s delay */
 }
 
 //=======================
@@ -113,8 +165,8 @@
   right: 52%;
   z-index: 10;
   opacity: 0.8;
- 
-  transform: scale(0.5)
+  transform: scale(0.5);
+animation: float-slow 12s ease-in-out infinite;
 }
 
 //=============================
@@ -125,6 +177,7 @@
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.4);
+animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
 }
 
 
@@ -139,6 +192,7 @@
   align-items: center;
   position: relative;
   z-index: 2;
+
 
 }
 
