@@ -90,23 +90,16 @@ const Header = () => {
             className={`header-mobile-dropdown ${isDropdownOpen ? "open" : ""}`}
           >
             <div className="dropdown-content">
-              <div className="menu-section">
-                <div className="menu-section-title">Services</div>
-                {services.map((service, index) => (
-                  <Link
-                    key={index}
-                    href={service.href}
-                    className="header-mobile-dropdown-item"
-                    onClick={() => setIsDropdownOpen(false)}
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  >
-                    {service.name}
-                  </Link>
-                ))}
-              </div>
-
               <div className="header-mobile-dropdown-divider"></div>
 
+              <Link
+                href="#about"
+                className="header-mobile-dropdown-item main-item"
+                onClick={() => setIsDropdownOpen(false)}
+                style={{ animationDelay: "0.2s" }}
+              >
+                About Us
+              </Link>
               <Link
                 href="#contact"
                 className="header-mobile-dropdown-item main-item"
