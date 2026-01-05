@@ -35,19 +35,32 @@ const About = () => {
             </p>
 
             <p className="about-pc-des-text-readmore">Read more</p>
-
           </div>
           <div className="about-pc-des-decor">
-             <div className="about-pc-des-decor-img-container">
-              <img src="decor.png" alt="decor" className="about-pc-des-decor-img" />
-             </div>
-             <div className="about-pc-des-decor-text">
+            <div className="about-pc-des-decor-img-container">
+              <img
+                src="about-inheal.png"
+                alt="decor"
+                className="about-pc-des-decor-img"
+              />
+            </div>
+            <div className="about-pc-des-decor-text">
               <h2 className="about-pc-des-decor-text-h2">About Us</h2>
-              <p className="about-pc-des-decor-text-p"> Inheal is a gentle space shaped around the belief that creativity can restore the mind, soften emotion, and bring people back to themselves. Our approach to art therapy is slow, mindful, and deeply human.</p>
-             </div>
+              <p className="about-pc-des-decor-text-p">
+                {" "}
+                Inheal is a gentle space shaped around the belief that
+                creativity can restore the mind, soften emotion, and bring
+                people back to themselves. Our approach to art therapy is slow,
+                mindful, and deeply human.
+              </p>
+            </div>
           </div>
           <div className="about-pc-des-decor-line">
-            <img src="line.png" alt="line" className="about-pc-des-decor-line-img" />
+            <img
+              src="line.png"
+              alt="line"
+              className="about-pc-des-decor-line-img"
+            />
           </div>
         </div>
       </div>

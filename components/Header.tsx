@@ -108,14 +108,6 @@ const Header = () => {
               <div className="header-mobile-dropdown-divider"></div>
 
               <Link
-                href="#about"
-                className="header-mobile-dropdown-item main-item"
-                onClick={() => setIsDropdownOpen(false)}
-                style={{ animationDelay: "0.2s" }}
-              >
-                About Us
-              </Link>
-              <Link
                 href="#contact"
                 className="header-mobile-dropdown-item main-item"
                 onClick={() => setIsDropdownOpen(false)}
