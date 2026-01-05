@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { razorpay, validateRazorpayConfig } from "@/lib/razorpay";
 import pool from "@/lib/db";
 import { getServicePrice } from "@/config/services";
+import { getRazorpay } from "@/lib/razorpay";
 
 export async function POST(request: NextRequest) {
   try {
-    validateRazorpayConfig();
+    const razorpay = getRazorpay(); // Get instance only when needed
     const body = await request.json();
     const { bookingId, service } = body;
 

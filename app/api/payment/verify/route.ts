@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import pool from "@/lib/db";
-import { resend, validateResendConfig } from "@/lib/resend";
+import { getResend } from "@/lib/resend";
 
 export async function POST(request: NextRequest) {
   try {
-    validateResendConfig();
+    const resend = getResend();
     const body = await request.json();
     const {
       razorpay_order_id,
