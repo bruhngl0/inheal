@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className="footer-main">
       <div className="footer-logo">
-        <img src="logo-footer.png" />
+        <img src="logo-footer.png" alt="footer" />
       </div>
 
       <div className="footer-des">
@@ -20,15 +20,15 @@ const Footer = () => {
 
       <div className="footer-icons">
         <div className="icons">
-          <img src="whatsapp.svg" />
+          <img src="whatsapp.svg" alt="wa" />
         </div>
 
         <div className="icons">
-          <img src="insta.svg" />
+          <img src="insta.svg" alt="in" />
         </div>
 
         <div className="icons">
-          <img src="linkedin.png" />
+          <img src="linkedin.png" alt="ic" />
         </div>
       </div>
 

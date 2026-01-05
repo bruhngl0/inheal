@@ -17,12 +17,15 @@ export default function Home() {
       <div id="about">
         <About />
       </div>
-      <Services />
-      <Servicespc />
+
+      <div id="service">
+        <Services />
+        <Servicespc />
+      </div>
       <div id="book">
         <Book />
       </div>
-      <div id="contact">
+      <div id="faq">
         <Qafs />
       </div>
 
@@ -30,10 +33,12 @@ export default function Home() {
         <Faqs />
       </div>
 
-      <div>
+      <div id="blog">
         <Blogs />
       </div>
-      <Footer />
+      <div id="contact">
+        <Footer />
+      </div>
     </>
   );
 }

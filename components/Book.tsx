@@ -497,7 +497,7 @@ const Book = () => {
                           : "bg-transparent border-2 border-[#918a43] hover:bg-[#918a43] hover:text-[#f5e6b3]"
                     }`}
                     style={{
-                      fontFamily: "agatho",
+                      fontFamily: "helvetica",
                       color: isBooked
                         ? "#999"
                         : isSelected
