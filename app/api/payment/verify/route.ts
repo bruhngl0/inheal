@@ -1,45 +1,53 @@
-import { NextRequest, NextResponse } from 'next/server';
-import crypto from 'crypto';
-import pool from '@/lib/db';
-import resend from '@/lib/resend';
+import { NextRequest, NextResponse } from "next/server";
+import crypto from "crypto";
+import pool from "@/lib/db";
+import { resend, validateResendConfig } from "@/lib/resend";
 
 export async function POST(request: NextRequest) {
   try {
+    validateResendConfig();
     const body = await request.json();
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, booking_id } = body;
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      booking_id,
+    } = body;
 
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !booking_id) {
+    if (
+      !razorpay_order_id ||
+      !razorpay_payment_id ||
+      !razorpay_signature ||
+      !booking_id
+    ) {
       return NextResponse.json(
-        { error: 'Missing required payment verification fields' },
-        { status: 400 }
+        { error: "Missing required payment verification fields" },
+        { status: 400 },
       );
     }
 
     // Verify payment signature
     const text = `${razorpay_order_id}|${razorpay_payment_id}`;
     const generated_signature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
       .update(text)
-      .digest('hex');
+      .digest("hex");
 
     if (generated_signature !== razorpay_signature) {
       return NextResponse.json(
-        { error: 'Invalid payment signature' },
-        { status: 400 }
+        { error: "Invalid payment signature" },
+        { status: 400 },
       );
     }
 
     // Get booking details
     const bookingResult = await pool.query(
-      'SELECT * FROM bookings WHERE id = $1',
-      [booking_id]
+      "SELECT * FROM bookings WHERE id = $1",
+      [booking_id],
     );
 
     if (bookingResult.rows.length === 0) {
-      return NextResponse.json(
-        { error: 'Booking not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
 
     const booking = bookingResult.rows[0];
@@ -52,7 +60,7 @@ export async function POST(request: NextRequest) {
            razorpay_signature = $3,
            updated_at = CURRENT_TIMESTAMP
        WHERE id = $4`,
-      ['paid', razorpay_payment_id, razorpay_signature, booking_id]
+      ["paid", razorpay_payment_id, razorpay_signature, booking_id],
     );
 
     // Send confirmation email if not already sent
@@ -81,7 +89,7 @@ export async function POST(request: NextRequest) {
                   <p>Your booking has been confirmed. Here are your booking details:</p>
                   <div class="details">
                     <p><strong>Service:</strong> ${booking.service}</p>
-                    <p><strong>Date:</strong> ${new Date(booking.booking_date).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p><strong>Date:</strong> ${new Date(booking.booking_date).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
                     <p><strong>Time:</strong> ${booking.booking_time}</p>
                     <p><strong>Payment Status:</strong> Paid</p>
                     <p><strong>Amount:</strong> ₹${booking.amount}</p>
@@ -98,33 +106,33 @@ export async function POST(request: NextRequest) {
         `;
 
         await resend.emails.send({
-          from: process.env.RESEND_FROM_EMAIL || 'Inheal <onboarding@resend.dev>',
+          from:
+            process.env.RESEND_FROM_EMAIL || "Inheal <onboarding@resend.dev>",
           to: booking.email,
-          subject: 'Booking Confirmation - Inheal',
+          subject: "Booking Confirmation - Inheal",
           html: emailHtml,
         });
 
         // Mark email as sent
         await pool.query(
-          'UPDATE bookings SET email_sent = TRUE WHERE id = $1',
-          [booking_id]
+          "UPDATE bookings SET email_sent = TRUE WHERE id = $1",
+          [booking_id],
         );
       } catch (emailError: any) {
-        console.error('Error sending email:', emailError);
+        console.error("Error sending email:", emailError);
         // Don't fail the payment verification if email fails
       }
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Payment verified and booking confirmed',
+      message: "Payment verified and booking confirmed",
     });
   } catch (error: any) {
-    console.error('Error verifying payment:', error);
+    console.error("Error verifying payment:", error);
     return NextResponse.json(
-      { error: 'Failed to verify payment', details: error.message },
-      { status: 500 }
+      { error: "Failed to verify payment", details: error.message },
+      { status: 500 },
     );
   }
 }
-
