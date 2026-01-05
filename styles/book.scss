@@ -12,6 +12,59 @@ font-style: normal;
 }
 
 
+/* Scroll Animation Keyframes */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Base state for scroll animation */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Trigger class added by JS */
+.scroll-animate.animate-in {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+/* Simple fade for elements that appear after state changes (like time slots) */
+.animate-in-simple {
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+/* Custom styling for the inputs to keep code clean */
+.booking-input-field {
+    border-bottom: 2px solid #4A4A4A;
+    color: #4A4A4A;
+    font-family: "agatho";
+}
+
+/* Apply scale effect to the calendar specifically */
+.booking-calendar.animate-in {
+    animation: scaleIn 0.8s ease-out forwards;
+}
+
+
 .booking-main{
   background-color: #918A43;
   padding: 2rem;

@@ -1,24 +1,73 @@
 
-
-
-
-
-@font-face {
-  font-family: 'agatho'; /* Name you'll use in CSS */
+@font-face { font-family: 'agatho';
   src: url('../public/fonts/Agatho_Regular.otf') format('otf');
   font-weight: normal;
   font-style: normal;
 }
 
-
 @font-face {
-  font-family: 'roundark'; /* Name you'll use in CSS */
+  font-family: 'roundark';
   src: url('../public/fonts/Roundark.otf') format('otf');
   font-weight: normal;
   font-style: normal;
 }
 
-.about{
+/* Scroll Animation Keyframes */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Base state for elements before animation */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: none;
+}
+
+/* Animated state when element comes into view */
+.scroll-animate.animate-in {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+/* Different animation variations for variety */
+.about-pc-img-img.animate-in {
+  animation: scaleIn 1s ease-out forwards;
+}
+
+.about-pc-des-decor.animate-in {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.about {
   height: auto;
   background-color: #FFF5CA;
   display: flex;
@@ -26,55 +75,50 @@
   justify-content: center;
   align-items: center;
   color: #918A43;
-  
-  
 }
 
 @media (min-width: 769px) {
-  .about{
+  .about {
     display: none;
   }
 }
 
-.about-main{
- background-color: #FFF5CA; 
- display: flex;
- flex-direction: column;
- justify-content:center;
- align-items: center;
+.about-main {
+  background-color: #FFF5CA;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
- }
-
-.about-main-img{
-  width: 75%; 
+.about-main-img {
+  width: 75%;
   margin-top: 2rem;
 }
 
-.about-main-des{
- background-color: #FFF5CA;
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- padding: 1rem;
-  color: #918A43;}
-
-.about-main-des-head{
+.about-main-des {
   background-color: #FFF5CA;
- 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: #918A43;
+}
 
-  >h1{
+.about-main-des-head {
+  background-color: #FFF5CA;
+
+  > h1 {
     font-size: 2rem;
-font-family: roundark;
-
+    font-family: roundark;
   }
 }
 
-
-.about-main-des-des{
+.about-main-des-des {
   background-color: #FFF5CA;
 
-  >p{
+  > p {
     text-align: center;
     font-family: agatho;
     line-height: 1em;
@@ -83,40 +127,33 @@ font-family: roundark;
   }
 }
 
-.about-pc{
+.about-pc {
   width: 100vw;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
- background-color: #FFF5CA;
- font-family: "agatho"
-
- 
+  background-color: #FFF5CA;
+  font-family: "agatho";
 }
 
 @media (max-width: 769px) {
-  .about-pc{
+  .about-pc {
     display: none;
   }
 }
 
-
 .about-pc-img-img {
-  }
-
-.about-pc-img-img  {
- width: 250px;
+  width: 250px;
   height: 250px;
   object-fit: cover;
   clip-path: url(#blob-shape);
-  display: block; 
+  display: block;
   margin-top: 5rem;
-
 }
 
-.about-pc-des{
+.about-pc-des {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -125,41 +162,44 @@ font-family: roundark;
   margin-top: 2rem;
 }
 
-.about-pc-des-head{
->h1{
-  font-size: 2rem;
-}
+.about-pc-des-head {
+  > h1 {
+    font-size: 2rem;
+  }
 }
 
-
-.about-pc-des-text{
+.about-pc-des-text {
   width: 70%;
- font-size: 1.6rem;
- text-align: center;
- line-height: 0.9;
+  font-size: 1.6rem;
+  text-align: center;
+  line-height: 0.9;
 }
 
-.about-pc-des-text-p1{
+.about-pc-des-text-p1 {
   padding: 2rem;
   font-size: 1.6rem;
 }
 
-.about-pc-des-text-p2{
+.about-pc-des-text-p2 {
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
- 
 }
 
-.about-pc-des-text-readmore{
+.about-pc-des-text-readmore {
   padding: 2rem;
   font-size: 1.6rem;
   text-align: center;
   text-decoration: underline;
   cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #5A7C8A;
+  }
 }
 
-.about-pc-des-decor{
+.about-pc-des-decor {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -170,13 +210,12 @@ font-family: roundark;
   margin-top: 4rem;
 }
 
-.about-pc-des-decor-img-container{
+.about-pc-des-decor-img-container {
   width: 100%;
   height: auto;
-  
 }
 
-.about-pc-des-decor-text{
+.about-pc-des-decor-text {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -187,7 +226,7 @@ font-family: roundark;
   padding: 2rem;
 }
 
-.about-pc-des-decor-text-h2{
+.about-pc-des-decor-text-h2 {
   font-size: 2rem;
   font-weight: normal;
   margin: 0;
@@ -195,7 +234,7 @@ font-family: roundark;
   font-family: roundark;
 }
 
-.about-pc-des-decor-text-p{
+.about-pc-des-decor-text-p {
   font-size: 1.6rem;
   font-weight: normal;
   margin: 0;
@@ -206,7 +245,7 @@ font-family: roundark;
   padding-bottom: 2rem;
 }
 
-.about-pc-des-decor-line{
+.about-pc-des-decor-line {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -215,9 +254,8 @@ font-family: roundark;
   margin-top: 4rem;
 }
 
-.about-pc-des-decor-img{
+.about-pc-des-decor-img {
   width: 100%;
   object-fit: contain;
   padding: 2rem;
 }
-/* Corner decorations - you can add these as pseudo-elements or separate div elements */

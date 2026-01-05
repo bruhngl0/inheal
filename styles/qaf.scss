@@ -14,6 +14,57 @@
 }
 
 
+/* --- Scroll Animation Logic --- */
+
+@keyframes faqSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-animate {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.scroll-animate.animate-in {
+  animation: faqSlideUp 0.8s ease-out forwards;
+}
+
+/* --- Existing Styles with small tweaks for animation --- */
+
+.qaf-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: #FFF5CA;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; // Prevents scrollbar flickering during animation
+}
+
+.qaf-container-main {
+  width: 70%;
+  display: flex; // Added display flex to align title center
+  flex-direction: column;
+  justify-content: center;
+  
+  > h2 {
+    align-self: center; // Center the title specifically
+  }
+}
+
+// ... rest of your SCSS remains the same
+
+
 
 
 .qaf-container {

@@ -1,48 +1,61 @@
-@font-face {
-  font-family: 'agatho'; /* Name you'll use in CSS */
-  src: url('../public/fonts/Agatho_Regular.otf') format('otf');
-  font-weight: normal;
-  font-style: normal;
+/* --- Animation Definitions --- */
+@keyframes blogTitleFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-
-@font-face {
-  font-family: 'roundark'; /* Name you'll use in CSS */
-  src: url('../public/fonts/Roundark.otf') format('otf');
-  font-weight: normal;
-  font-style: normal;
+@keyframes blogCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
+.scroll-animate {
+  opacity: 0;
+  will-change: transform, opacity;
+}
 
+// Title animation trigger
+h1.scroll-animate.animate-in {
+  animation: blogTitleFade 0.8s ease-out forwards;
+}
 
+// Card animation trigger
+.blogs-img-container.scroll-animate.animate-in {
+  animation: blogCardReveal 1s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  animation-delay: 0.2s; // Starts slightly after the title
+}
 
-.blogs-main{
+/* --- Existing Styles --- */
+
+.blogs-main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: agatho;
   padding-bottom: 3rem;
+  overflow: hidden; // Keeps the slide-up tidy
 
-  >h1{
+  > h1 {
     font-size: 3rem;
     padding: 3rem;
+    color: #918a43; // Assuming color based on previous sections
   }
 }
 
-@media(max-width: 769px){
-  .blogs-main{
-    >h1{
-      font-size: 2rem;
-      padding: 1rem;
-      padding-top: 2rem;
-    }
-
-  }
-}
-
-
-.blogs-img-container{
+.blogs-img-container {
   width: 70%;
   background-color: #FFF5CA;
   border-radius: 20px;
@@ -51,26 +64,41 @@
   justify-content: center;
   align-items: center;
   color: #918a43;
+  box-shadow: 0 10px 30px rgba(145, 138, 67, 0.1); // Subtle themed shadow
+  transition: transform 0.4s ease;
 
-  >p{
+  &:hover {
+    transform: translateY(-8px); // Subtle lift on hover
+  }
+
+  > p {
     font-size: 2rem;
     padding: 20px;
+    font-family: roundark; // Applying your brand font to the subtitle
   }
-  
-  >img{
+
+  > img {
+    width: 100%;
+    height: auto;
     padding: 1rem;
     padding-bottom: 0;
+    border-radius: 25px; // Matches container curvature
   }
 }
 
+/* Responsive adjustments */
+@media (max-width: 769px) {
+  .blogs-main > h1 {
+    font-size: 2rem;
+    padding: 1rem;
+    padding-top: 2rem;
+  }
 
-@media(max-width: 769px){
-  .blogs-img-container{
+  .blogs-img-container {
     width: 83%;
-
-    >p{
-      font-size: 1rem;
-      padding: 10px;
+    > p {
+      font-size: 1.2rem;
+      padding: 15px;
     }
   }
 }

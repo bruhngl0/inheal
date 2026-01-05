@@ -1,6 +1,52 @@
+"use client";
+import { useEffect, useRef } from "react";
 import "../styles/about.scss";
 
 const About = () => {
+  const imgRef = useRef<HTMLImageElement>(null);
+  const headRef = useRef<HTMLDivElement>(null);
+  const text1Ref = useRef<HTMLParagraphElement>(null);
+  const text2Ref = useRef<HTMLParagraphElement>(null);
+  const readMoreRef = useRef<HTMLParagraphElement>(null);
+  const decorRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+
+  // Mobile refs
+  const mobileImgRef = useRef<HTMLImageElement>(null);
+  const mobileHeadRef = useRef<HTMLDivElement>(null);
+  const mobileDesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-in");
+        }
+      });
+    }, observerOptions);
+
+    // Observe desktop elements
+    if (imgRef.current) observer.observe(imgRef.current);
+    if (headRef.current) observer.observe(headRef.current);
+    if (text1Ref.current) observer.observe(text1Ref.current);
+    if (text2Ref.current) observer.observe(text2Ref.current);
+    if (readMoreRef.current) observer.observe(readMoreRef.current);
+    if (decorRef.current) observer.observe(decorRef.current);
+    if (lineRef.current) observer.observe(lineRef.current);
+
+    // Observe mobile elements
+    if (mobileImgRef.current) observer.observe(mobileImgRef.current);
+    if (mobileHeadRef.current) observer.observe(mobileHeadRef.current);
+    if (mobileDesRef.current) observer.observe(mobileDesRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       {/* Hidden SVG for clip-path */}
@@ -12,31 +58,54 @@ const About = () => {
         </defs>
       </svg>
 
+      {/* Desktop Version */}
       <div className="about-pc">
         <div className="about-pc-img">
-          <img src="about-pari.png" alt="about" className="about-pc-img-img" />
+          <img
+            ref={imgRef}
+            src="about-pari.png"
+            alt="about"
+            className="about-pc-img-img scroll-animate"
+          />
         </div>
         <div className="about-pc-des">
-          <div className="about-pc-des-head">
+          <div ref={headRef} className="about-pc-des-head scroll-animate">
             <h1>Hello, I am Parita. </h1>
           </div>
           <div className="about-pc-des-text">
-            <p className="about-pc-des-text-p1">
+            <p
+              ref={text1Ref}
+              className="about-pc-des-text-p1 scroll-animate"
+              style={{ animationDelay: "0.1s" }}
+            >
               Art has always been my way of making sense of the world, a
               language of colours, symbols, and metaphor that helped me express
               what words alone could not. Over time, I began to see how deeply
               this creative process could support others too.
             </p>
-            <p className="about-pc-des-text-p2">
+            <p
+              ref={text2Ref}
+              className="about-pc-des-text-p2 scroll-animate"
+              style={{ animationDelay: "0.2s" }}
+            >
               My journey began in psychology, however along the way, I felt
               drawn to approaches that were more personal and client-centered.
               An approach that honoured creative expression, connection,
               authenticity, which led me to Art Psychotherapy.
             </p>
-
-            <p className="about-pc-des-text-readmore">Read more</p>
+            <p
+              ref={readMoreRef}
+              className="about-pc-des-text-readmore scroll-animate"
+              style={{ animationDelay: "0.3s" }}
+            >
+              Read more
+            </p>
           </div>
-          <div className="about-pc-des-decor">
+          <div
+            ref={decorRef}
+            className="about-pc-des-decor scroll-animate"
+            style={{ animationDelay: "0.4s" }}
+          >
             <div className="about-pc-des-decor-img-container">
               <img
                 src="decor.png"
@@ -47,7 +116,6 @@ const About = () => {
             <div className="about-pc-des-decor-text">
               <h2 className="about-pc-des-decor-text-h2">About Us</h2>
               <p className="about-pc-des-decor-text-p">
-                {" "}
                 Inheal is a gentle space shaped around the belief that
                 creativity can restore the mind, soften emotion, and bring
                 people back to themselves. Our approach to art therapy is slow,
@@ -55,7 +123,11 @@ const About = () => {
               </p>
             </div>
           </div>
-          <div className="about-pc-des-decor-line">
+          <div
+            ref={lineRef}
+            className="about-pc-des-decor-line scroll-animate"
+            style={{ animationDelay: "0.5s" }}
+          >
             <img
               src="line.png"
               alt="line"
@@ -64,15 +136,30 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Version */}
       <div className="about">
         <div className="about-main">
-          <img src="about-inheal.png" alt="about" className="about-main-img" />
+          <img
+            ref={mobileImgRef}
+            src="about-inheal.png"
+            alt="about"
+            className="about-main-img scroll-animate"
+          />
         </div>
         <div className="about-main-des">
-          <div className="about-main-des-head">
+          <div
+            ref={mobileHeadRef}
+            className="about-main-des-head scroll-animate"
+            style={{ animationDelay: "0.1s" }}
+          >
             <h1>About us</h1>
           </div>
-          <div className="about-main-des-des">
+          <div
+            ref={mobileDesRef}
+            className="about-main-des-des scroll-animate"
+            style={{ animationDelay: "0.2s" }}
+          >
             <p>
               Inheal is a gentle space shaped around the belief that creativity
               can restore the mind, soften emotion, and bring people back to

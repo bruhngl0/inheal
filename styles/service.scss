@@ -105,7 +105,7 @@
   z-index: 10;
   opacity: 0.9;  
   transform: scale(0.5);
-  animation: float-gentle 8s ease-in-out infinite;
+  animation: float-gentle 4s ease-in-out infinite;
 }
 
 //=========================
@@ -117,7 +117,7 @@
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.4);
-animation: drift-small 10s ease-in-out infinite;
+animation: drift-small 6s ease-in-out infinite;
 }
 
 //====================
@@ -129,7 +129,7 @@ animation: drift-small 10s ease-in-out infinite;
   z-index: 10;
   opacity: 0.85;
   transform: scale(0.4);
- animation: sway-tiny 7s ease-in-out infinite;
+ animation: sway-tiny 5s ease-in-out infinite;
 }
 
 
@@ -142,7 +142,7 @@ animation: drift-small 10s ease-in-out infinite;
   z-index: 10;
   opacity: 0.8;
  transform: scale(0.4);
-animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
+animation: drift-small 6s ease-in-out infinite 1s; /* 1s delay */
 }
 
 //============================
@@ -154,7 +154,7 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.4);
-  animation: sway-tiny 11s ease-in-out infinite 2s; /* 2s delay */
+  animation: sway-tiny 5s ease-in-out infinite 2s; /* 2s delay */
 }
 
 //=======================
@@ -166,7 +166,7 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.5);
-animation: float-slow 12s ease-in-out infinite;
+animation: float-slow 7s ease-in-out infinite;
 }
 
 //=============================

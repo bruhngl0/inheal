@@ -1,15 +1,14 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../styles/qaf.scss";
 
 const qafs1 = [
   {
-    q: "WHAT IS ART PHYCOTHERAPY?",
+    q: "WHAT IS ART PSYCHOTHERAPY?",
     a: "Art psychotherapy is a form of psychotherapy that uses artmaking as a way to...........",
   },
   {
-    q: "DO NEED TO BE GOOD AT ART TO BENIFIT FROM ART THERAPY?",
+    q: "DO I NEED TO BE GOOD AT ART TO BENEFIT FROM ART THERAPY?",
     a: "Not at all. Art therapy is about expression, not skill or talent. You can use simple marks, colours.......",
   },
   {
@@ -17,22 +16,51 @@ const qafs1 = [
     a: "Art therapy is a form of psychotherapy that uses the creative process of making art to improve m...........",
   },
   {
-    q: "WHAT HAPPENS IN ART THERAPY SESSION?",
+    q: "WHAT HAPPENS IN AN ART THERAPY SESSION?",
     a: "A session usually includes gentle conversation, creative exploration using art materials, and.......",
   },
 ];
 
 export default function Qafs() {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggle = (idx) => {
+  // Animation Refs
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const itemsRef = useRef<(HTMLLIElement | null)[]>([]);
+
+  const toggle = (idx: number) => {
     setOpenIndex((prev) => (prev === idx ? null : idx));
   };
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-in");
+        }
+      });
+    }, observerOptions);
+
+    if (titleRef.current) observer.observe(titleRef.current);
+
+    itemsRef.current.forEach((item) => {
+      if (item) observer.observe(item);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="qaf-container" aria-label="Frequently Asked Questions">
       <div className="qaf-container-main">
-        <h2 className="qaf-title">FAQ’S</h2>
+        <h2 ref={titleRef} className="qaf-title scroll-animate">
+          FAQ’S
+        </h2>
 
         <ul className="qaf-list">
           {qafs1.map((item, idx) => {
@@ -41,7 +69,14 @@ export default function Qafs() {
             const buttonId = `qaf-button-${idx}`;
 
             return (
-              <li key={idx} className={`qaf-item ${isOpen ? "open" : ""}`}>
+              <li
+                key={idx}
+                ref={(el) => {
+                  itemsRef.current[idx] = el;
+                }}
+                className={`qaf-item ${isOpen ? "open" : ""} scroll-animate`}
+                style={{ animationDelay: `${idx * 0.1}s` }} // Staggered entry
+              >
                 <div className="qaf-row">
                   <h3 className="qaf-question">
                     <button
