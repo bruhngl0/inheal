@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
 import "../styles/header.scss";
 import Link from "next/link";
@@ -11,7 +10,10 @@ const Header = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
@@ -32,13 +34,29 @@ const Header = () => {
     { name: "Workshop", href: "#book" },
   ];
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isDropdownOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isDropdownOpen]);
+
   return (
     <div className="header">
       <div className="header-content">
         {/* Desktop Left Navigation - Services and About Us */}
         <nav className="header-nav header-nav-left">
-          <Link href="#book" className="header-nav-link">Services</Link>
-          <Link href="#about" className="header-nav-link">About Us</Link>
+          <Link href="#book" className="header-nav-link">
+            Services
+          </Link>
+          <Link href="#about" className="header-nav-link">
+            About Us
+          </Link>
         </nav>
 
         {/* Logo - Centered on both mobile and desktop */}
@@ -48,70 +66,73 @@ const Header = () => {
 
         {/* Desktop Right Navigation - Contact Us and Book a session */}
         <nav className="header-nav header-nav-right">
-          <Link href="#contact" className="header-nav-link">Contact Us</Link>
-          <Link href="#book" className="header-nav-link">Book a session</Link>
+          <Link href="#contact" className="header-nav-link">
+            Contact Us
+          </Link>
+          <Link href="#book" className="header-nav-link">
+            Book a session
+          </Link>
         </nav>
 
         {/* Mobile Dropdown Menu */}
         <div className="header-mobile-menu" ref={dropdownRef}>
           <button
-            className="header-mobile-menu-button"
+            className={`header-mobile-menu-button ${isDropdownOpen ? "open" : ""}`}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             aria-label="Toggle services menu"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 12H21M3 6H21M3 18H21"
-                stroke="#2C3E50"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
           </button>
-          {isDropdownOpen && (
-            <div className="header-mobile-dropdown">
-              <div className="header-mobile-dropdown-header">Services</div>
-              {services.map((service, index) => (
-                <Link
-                  key={index}
-                  href={service.href}
-                  className="header-mobile-dropdown-item"
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  {service.name}
-                </Link>
-              ))}
+
+          <div
+            className={`header-mobile-dropdown ${isDropdownOpen ? "open" : ""}`}
+          >
+            <div className="dropdown-content">
+              <div className="menu-section">
+                <div className="menu-section-title">Services</div>
+                {services.map((service, index) => (
+                  <Link
+                    key={index}
+                    href={service.href}
+                    className="header-mobile-dropdown-item"
+                    onClick={() => setIsDropdownOpen(false)}
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    {service.name}
+                  </Link>
+                ))}
+              </div>
+
               <div className="header-mobile-dropdown-divider"></div>
+
               <Link
                 href="#about"
-                className="header-mobile-dropdown-item"
+                className="header-mobile-dropdown-item main-item"
                 onClick={() => setIsDropdownOpen(false)}
+                style={{ animationDelay: "0.2s" }}
               >
                 About Us
               </Link>
               <Link
                 href="#contact"
-                className="header-mobile-dropdown-item"
+                className="header-mobile-dropdown-item main-item"
                 onClick={() => setIsDropdownOpen(false)}
+                style={{ animationDelay: "0.25s" }}
               >
                 Contact Us
               </Link>
               <Link
                 href="#book"
-                className="header-mobile-dropdown-item"
+                className="header-mobile-dropdown-item cta-item"
                 onClick={() => setIsDropdownOpen(false)}
+                style={{ animationDelay: "0.3s" }}
               >
                 Book a session
               </Link>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

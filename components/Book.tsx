@@ -355,7 +355,7 @@ const Book = () => {
               style={{
                 borderBottom: "2px solid #4A4A4A",
                 color: "#4A4A4A",
-                fontFamily: "serif",
+                fontFamily: "agatho",
               }}
               required
             />
@@ -372,7 +372,7 @@ const Book = () => {
               style={{
                 borderBottom: "2px solid #4A4A4A",
                 color: "#4A4A4A",
-                fontFamily: "serif",
+                fontFamily: "agatho",
               }}
               required
             />
@@ -389,7 +389,7 @@ const Book = () => {
               style={{
                 borderBottom: "2px solid #4A4A4A",
                 color: "#4A4A4A",
-                fontFamily: "serif",
+                fontFamily: "agatho",
               }}
             />
           </div>
@@ -405,7 +405,7 @@ const Book = () => {
               style={{
                 borderBottom: "2px solid #4A4A4A",
                 color: "#4A4A4A",
-                fontFamily: "serif",
+                fontFamily: "agatho",
               }}
             />
           </div>
@@ -454,7 +454,7 @@ const Book = () => {
               className="rounded-lg p-4"
               styles={{
                 root: {
-                  fontFamily: "serif",
+                  fontFamily: "agatho",
                 },
                 day_selected: {
                   backgroundColor: "#918a43",
@@ -497,7 +497,7 @@ const Book = () => {
                           : "bg-transparent border-2 border-[#918a43] hover:bg-[#918a43] hover:text-[#f5e6b3]"
                     }`}
                     style={{
-                      fontFamily: "serif",
+                      fontFamily: "agatho",
                       color: isBooked
                         ? "#999"
                         : isSelected
@@ -530,7 +530,7 @@ const Book = () => {
               <button
                 onClick={handlePayNow}
                 disabled={isSubmitting}
-                className="w-full text-sl font-serif py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                className="w-full text-sl  py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
                 style={{
                   backgroundColor: "#918a43",
                   color: "#f5e6b3",
@@ -543,10 +543,10 @@ const Book = () => {
               <button
                 onClick={handlePayLater}
                 disabled={isSubmitting}
-                className="w-full text-sl font-serif py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                className="w-full text-sl  py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
                 style={{
-                  backgroundColor: "#5A7C8A",
-                  color: "#f5e6b3",
+                  backgroundColor: "#918a43",
+                  color: "#fff5ca",
                   letterSpacing: "",
                 }}
               >
