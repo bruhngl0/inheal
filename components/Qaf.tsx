@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import "../styles/qaf.scss";
 
+// 1. Define the data outside the component
 const qafs1 = [
   {
     q: "WHAT IS ART PSYCHOTHERAPY?",
@@ -24,7 +25,11 @@ const qafs1 = [
 export default function Qafs() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  // Animation Refs
+  // This state tracks which items have been "seen" so they don't disappear on click
+  const [revealedIndices, setRevealedIndices] = useState<
+    Record<number, boolean>
+  >({});
+
   const titleRef = useRef<HTMLHeadingElement>(null);
   const itemsRef = useRef<(HTMLLIElement | null)[]>([]);
 
@@ -41,7 +46,17 @@ export default function Qafs() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-in");
+          // Handle the items
+          const indexAttr = entry.target.getAttribute("data-index");
+          if (indexAttr !== null) {
+            const idx = Number(indexAttr);
+            setRevealedIndices((prev) => ({ ...prev, [idx]: true }));
+          }
+
+          // Handle the title specifically (it doesn't have a data-index)
+          if (entry.target === titleRef.current) {
+            entry.target.classList.add("animate-in");
+          }
         }
       });
     }, observerOptions);
@@ -65,6 +80,7 @@ export default function Qafs() {
         <ul className="qaf-list">
           {qafs1.map((item, idx) => {
             const isOpen = openIndex === idx;
+            const isRevealed = revealedIndices[idx];
             const contentId = `qaf-content-${idx}`;
             const buttonId = `qaf-button-${idx}`;
 
@@ -74,8 +90,9 @@ export default function Qafs() {
                 ref={(el) => {
                   itemsRef.current[idx] = el;
                 }}
-                className={`qaf-item ${isOpen ? "open" : ""} scroll-animate`}
-                style={{ animationDelay: `${idx * 0.1}s` }} // Staggered entry
+                data-index={idx} // Crucial for the observer to know which item is visible
+                className={`qaf-item ${isOpen ? "open" : ""} ${isRevealed ? "animate-in" : ""} scroll-animate`}
+                style={{ animationDelay: `${idx * 0.1}s` }}
               >
                 <div className="qaf-row">
                   <h3 className="qaf-question">
