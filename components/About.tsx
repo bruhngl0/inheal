@@ -39,7 +39,7 @@ const About = () => {
           <div className="about-pc-des-decor">
             <div className="about-pc-des-decor-img-container">
               <img
-                src="about-inheal.png"
+                src="decor.png"
                 alt="decor"
                 className="about-pc-des-decor-img"
               />

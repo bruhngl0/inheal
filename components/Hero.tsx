@@ -11,7 +11,7 @@ const Hero = () => {
 
       {/* PC/Desktop Video */}
       <video className="hero-main hero-desktop" autoPlay loop muted playsInline>
-        <source src="/pcinheal.mp4" type="video/mp4" />
+        <source src="/moju.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>

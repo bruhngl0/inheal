@@ -69,6 +69,7 @@
   gap: 2rem;
   align-items: center;
   margin-right: auto;
+  color: #fff5ca;
   
   @media (max-width: 768px) {
     display: none !important;
@@ -96,10 +97,10 @@
 }
 
 .header-nav-link{
-  color: #2C3E50;
+  color: #fff5ca;
   text-decoration: none;
   font-family: 'agatho', serif;
-  font-size: 1rem;
+  font-size: 1.3rem;
   transition: opacity 0.3s ease;
   
   &:hover{
@@ -298,16 +299,30 @@
   }
 }
 
+.header-mobile-dropdown-logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  >img{
+    width: 100px;
+    
+  }
+}
+
 .header-mobile-dropdown-item.main-item{
   background: rgba(255, 255, 255, 0.15);
+  font-size: 1.6rem;
 }
 
 .header-mobile-dropdown-item.cta-item{
-  background: linear-gradient(135deg, #2C3E50 0%, #34495e 100%);
+  background: rgba(255, 255, 255, 0.15);
   font-weight: 600;
   border: 2px solid rgba(255, 255, 255, 0.3);
   font-size: 1.4rem;
   margin-top: 1.5rem;
+font-size: 1.6rem;
   
   &:hover{
     background: linear-gradient(135deg, #34495e 0%, #2C3E50 100%);

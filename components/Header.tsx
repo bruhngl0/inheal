@@ -90,6 +90,9 @@ const Header = () => {
             className={`header-mobile-dropdown ${isDropdownOpen ? "open" : ""}`}
           >
             <div className="dropdown-content">
+              <div className="header-mobile-dropdown-logo">
+                <img src="logo.png" alt="logo" />
+              </div>
               <div className="header-mobile-dropdown-divider"></div>
 
               <Link
@@ -100,6 +103,33 @@ const Header = () => {
               >
                 About Us
               </Link>
+              <Link
+                href="#service"
+                className="header-mobile-dropdown-item main-item"
+                onClick={() => setIsDropdownOpen(false)}
+                style={{ animationDelay: "0.2s" }}
+              >
+                Services
+              </Link>
+
+              <Link
+                href="#faq"
+                className="header-mobile-dropdown-item main-item"
+                onClick={() => setIsDropdownOpen(false)}
+                style={{ animationDelay: "0.2s" }}
+              >
+                FAQs
+              </Link>
+
+              <Link
+                href="#blog"
+                className="header-mobile-dropdown-item main-item"
+                onClick={() => setIsDropdownOpen(false)}
+                style={{ animationDelay: "0.2s" }}
+              >
+                Blogs
+              </Link>
+
               <Link
                 href="#contact"
                 className="header-mobile-dropdown-item main-item"
