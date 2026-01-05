@@ -1,40 +1,38 @@
-import { NextRequest, NextResponse } from 'next/server';
-import razorpay from '@/lib/razorpay';
-import pool from '@/lib/db';
-import { getServicePrice } from '@/config/services';
+import { NextRequest, NextResponse } from "next/server";
+import { razorpay, validateRazorpayConfig } from "@/lib/razorpay";
+import pool from "@/lib/db";
+import { getServicePrice } from "@/config/services";
 
 export async function POST(request: NextRequest) {
   try {
+    validateRazorpayConfig();
     const body = await request.json();
     const { bookingId, service } = body;
 
     if (!bookingId || !service) {
       return NextResponse.json(
-        { error: 'Booking ID and service are required' },
-        { status: 400 }
+        { error: "Booking ID and service are required" },
+        { status: 400 },
       );
     }
 
     // Get booking details
     const bookingResult = await pool.query(
-      'SELECT * FROM bookings WHERE id = $1',
-      [bookingId]
+      "SELECT * FROM bookings WHERE id = $1",
+      [bookingId],
     );
 
     if (bookingResult.rows.length === 0) {
-      return NextResponse.json(
-        { error: 'Booking not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
 
     const booking = bookingResult.rows[0];
 
     // Check if already paid
-    if (booking.payment_status === 'paid') {
+    if (booking.payment_status === "paid") {
       return NextResponse.json(
-        { error: 'Booking already paid' },
-        { status: 400 }
+        { error: "Booking already paid" },
+        { status: 400 },
       );
     }
 
@@ -45,7 +43,7 @@ export async function POST(request: NextRequest) {
     // Create Razorpay order
     const options = {
       amount: amountInPaise,
-      currency: 'INR',
+      currency: "INR",
       receipt: `booking_${bookingId}_${Date.now()}`,
       notes: {
         booking_id: bookingId.toString(),
@@ -62,7 +60,7 @@ export async function POST(request: NextRequest) {
       `UPDATE bookings 
        SET razorpay_order_id = $1, amount = $2 
        WHERE id = $3`,
-      [order.id, amount, bookingId]
+      [order.id, amount, bookingId],
     );
 
     return NextResponse.json({
@@ -75,11 +73,10 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error('Error creating Razorpay order:', error);
+    console.error("Error creating Razorpay order:", error);
     return NextResponse.json(
-      { error: 'Failed to create payment order', details: error.message },
-      { status: 500 }
+      { error: "Failed to create payment order", details: error.message },
+      { status: 500 },
     );
   }
 }
-

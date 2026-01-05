@@ -1,13 +1,21 @@
-import Razorpay from 'razorpay';
+import Razorpay from "razorpay";
 
-if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-  throw new Error('Razorpay credentials are not set in environment variables');
-}
+// Don't throw error during build
+const key_id = process.env.RAZORPAY_KEY_ID || "";
+const key_secret = process.env.RAZORPAY_KEY_SECRET || "";
 
 export const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+  key_id,
+  key_secret,
 });
 
-export default razorpay;
+// Validate at runtime when actually using razorpay
+export function validateRazorpayConfig() {
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    throw new Error(
+      "Razorpay credentials are not set in environment variables",
+    );
+  }
+}
 
+export default razorpay;
