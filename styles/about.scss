@@ -1,5 +1,5 @@
-
-@font-face { font-family: 'agatho';
+@font-face {
+  font-family: 'agatho';
   src: url('../public/fonts/Agatho_Regular.otf') format('otf');
   font-weight: normal;
   font-style: normal;
@@ -18,6 +18,7 @@
     opacity: 0;
     transform: translateY(50px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -29,6 +30,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -40,6 +42,7 @@
     opacity: 0;
     transform: translateY(40px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -77,9 +80,9 @@
   color: #918A43;
 }
 
-@media (min-width: 769px) {
+@media (max-width: 769px) {
   .about {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -109,8 +112,8 @@
 .about-main-des-head {
   background-color: #FFF5CA;
 
-  > h1 {
-    font-size: 2rem;
+  >h1 {
+    font-size: 1.6rem;
     font-family: roundark;
   }
 }
@@ -118,7 +121,7 @@
 .about-main-des-des {
   background-color: #FFF5CA;
 
-  > p {
+  >p {
     text-align: center;
     font-family: agatho;
     line-height: 1em;
@@ -136,13 +139,11 @@
   align-items: center;
   background-color: #FFF5CA;
   font-family: "agatho";
+  padding-bottom: 3rem;
 }
 
-@media (max-width: 769px) {
-  .about-pc {
-    display: none;
-  }
-}
+
+/* Removed the media query hiding about-pc */
 
 .about-pc-img-img {
   width: 250px;
@@ -163,8 +164,18 @@
 }
 
 .about-pc-des-head {
-  > h1 {
+  >h1 {
     font-size: 2rem;
+    font-family: 'roundark';
+    text-align: center;
+  }
+}
+
+@media(max-width: 480px) {
+  .about-pc-des-head {
+    >h1 {
+      font-size: 1.6rem;
+    }
   }
 }
 
@@ -173,29 +184,48 @@
   font-size: 1.6rem;
   text-align: center;
   line-height: 0.9;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    font-size: 1.2rem;
+  }
 }
 
 .about-pc-des-text-p1 {
   padding: 2rem;
   font-size: 1.6rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
 }
 
 .about-pc-des-text-p2 {
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .about-pc-des-text-readmore {
-  padding: 2rem;
-  font-size: 1.6rem;
-  text-align: center;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: color 0.3s ease;
+  display: none;
 
-  &:hover {
-    color: #5A7C8A;
+  @media (max-width: 768px) {
+    display: block;
+    padding: 1rem;
+    font-size: 1.4rem;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #5A7C8A;
+    }
   }
 }
 
@@ -208,6 +238,11 @@
   background-color: #918A43;
   border-radius: 20px;
   margin-top: 4rem;
+
+  @media (max-width: 768px) {
+    width: 85%;
+    margin-top: 2rem;
+  }
 }
 
 .about-pc-des-decor-img-container {
@@ -224,6 +259,11 @@
   font-size: 1.6rem;
   color: #FFF5CA;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+  }
 }
 
 .about-pc-des-decor-text-h2 {
@@ -232,7 +272,13 @@
   margin: 0;
   letter-spacing: 1px;
   font-family: roundark;
+
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+
+  }
 }
+
 
 .about-pc-des-decor-text-p {
   font-size: 1.6rem;
@@ -243,6 +289,11 @@
   line-height: 0.9;
   text-align: center;
   padding-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+  }
 }
 
 .about-pc-des-decor-line {
@@ -252,10 +303,21 @@
   align-items: center;
   padding: 2rem;
   margin-top: 4rem;
+
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+    padding: 1rem;
+  }
 }
 
 .about-pc-des-decor-img {
   width: 100%;
   object-fit: contain;
   padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
 }

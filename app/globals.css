@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "agatho"; /* Name you'll use in CSS */
+  font-family: "agatho";
+  /* Name you'll use in CSS */
   src: url("../public/fonts/Agatho_Regular.otf") format("otf");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "roundark"; /* Name you'll use in CSS */
+  font-family: "roundark";
+  /* Name you'll use in CSS */
   src: url("../public/fonts/Roundark.otf") format("otf");
   font-weight: normal;
   font-style: normal;

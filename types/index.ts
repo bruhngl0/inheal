@@ -7,7 +7,7 @@ export interface Booking {
   service: string;
   booking_date: string; // YYYY-MM-DD format
   booking_time: string; // HH:MM format
-  preferred_time_slot?: string;
+
   created_at?: string;
   updated_at?: string;
 }
@@ -20,7 +20,7 @@ export interface BookingFormData {
   service: string;
   booking_date: string;
   booking_time: string;
-  preferredTime?: string;
+
 }
 
 export interface TimeSlot {

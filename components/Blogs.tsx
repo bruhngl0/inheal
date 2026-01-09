@@ -11,6 +11,8 @@ const Blogs = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
+  const [isPlaying, setIsPlaying] = useState(false);
+
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
@@ -38,14 +40,34 @@ const Blogs = () => {
         ref={titleRef}
         className={`scroll-animate ${isTitleRevealed ? "animate-in" : ""}`}
       >
-        Blogs
+        What is Art Therapy?
       </h1>
 
       <div
         ref={cardRef}
         className={`blogs-img-container scroll-animate ${isCardRevealed ? "animate-in" : ""}`}
       >
-        <img src="rectangle.png" alt="blogs" className="blogs-img-img" />
+        {!isPlaying ? (
+          <div className="blogs-video-thumbnail" onClick={() => setIsPlaying(true)}>
+            <img src="rectangle.png" alt="Play Video" className="blogs-img-img" />
+            <div className="play-button">
+              <svg viewBox="0 0 24 24" fill="currentColor" height="64" width="64">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+        ) : (
+          <iframe
+            width="100%"
+            height="400"
+            src="https://www.youtube.com/embed/WCMcsA5Ic8c?autoplay=1"
+            title="What is Art Therapy?"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="blogs-video"
+          ></iframe>
+        )}
         <p>Know About Art Therapy</p>
       </div>
       <div></div>

@@ -4,7 +4,7 @@ import pool from '@/lib/db';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, age, phone, service, booking_date, booking_time, preferredTime } = body;
+    const { name, email, age, phone, service, booking_date, booking_time } = body;
 
     // Basic validation
     if (!name || !email || !service || !booking_date || !booking_time) {
@@ -29,17 +29,17 @@ export async function POST(request: NextRequest) {
 
     // Insert booking with pending payment status
     const result = await pool.query(
-      `INSERT INTO bookings (name, email, age, phone, service, booking_date, booking_time, preferred_time_slot, payment_status)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'pending')
+      `INSERT INTO bookings (name, email, age, phone, service, booking_date, booking_time, payment_status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, 'pending')
        RETURNING *`,
-      [name, email, age || null, phone || null, service, booking_date, booking_time, preferredTime || null]
+      [name, email, age || null, phone || null, service, booking_date, booking_time]
     );
 
     return NextResponse.json(
-      { 
-        success: true, 
+      {
+        success: true,
         booking: result.rows[0],
-        message: 'Booking created successfully' 
+        message: 'Booking created successfully'
       },
       { status: 201 }
     );

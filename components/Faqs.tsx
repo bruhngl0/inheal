@@ -19,11 +19,7 @@ const testimonialData = [
     title: "What is Art Therapy?",
     text: "Art therapy is a form of psychotherapy that uses the creative process of making art to improve m...........",
   },
-  {
-    id: 4,
-    title: "What is Art Therapy?",
-    text: "Art therapy is a form of psychotherapy that uses the creative process of making art to improve m...........",
-  },
+
 ];
 
 const Faqs = () => {
@@ -56,7 +52,7 @@ const Faqs = () => {
   return (
     <div className="faq-main">
       <div ref={headRef} className="faq-head scroll-animate">
-        <h1>TESTIMONIALS</h1>
+        <h1>Blogs</h1>
       </div>
 
       {/* Row 1 */}

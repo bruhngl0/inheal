@@ -1,13 +1,10 @@
-
-
-
-
 /* --- Footer Animation Keyframes --- */
 @keyframes footerSlideUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -24,12 +21,29 @@
 }
 
 /* --- Staggering the Footer Elements --- */
-.footer-logo.animate-in { animation-delay: 0.1s; }
-.footer-des.animate-in { animation-delay: 0.2s; }
-.footer-number.animate-in { animation-delay: 0.3s; }
-.footer-email.animate-in { animation-delay: 0.4s; }
-.footer-icons.animate-in { animation-delay: 0.5s; }
-.copyright.animate-in { animation-delay: 0.6s; }
+.footer-logo.animate-in {
+  animation-delay: 0.1s;
+}
+
+.footer-des.animate-in {
+  animation-delay: 0.2s;
+}
+
+.footer-number.animate-in {
+  animation-delay: 0.3s;
+}
+
+.footer-email.animate-in {
+  animation-delay: 0.4s;
+}
+
+.footer-icons.animate-in {
+  animation-delay: 0.5s;
+}
+
+.copyright.animate-in {
+  animation-delay: 0.6s;
+}
 
 /* --- Existing Styles --- */
 .footer-main {
@@ -41,10 +55,11 @@
   font-family: agatho;
   color: #fff5ca; // Ensuring text is visible against the dark background
   padding-top: 2rem;
+  font-size: 1.2rem;
 }
 
 .footer-logo {
-  > img {
+  >img {
     width: 100px;
     margin-top: 20px;
   }
@@ -54,7 +69,7 @@
   margin-top: 1rem;
   border-bottom: 1px solid rgba(255, 245, 202, 0.4); // Subtle white/beige line
 
-  > p {
+  >p {
     padding: 1rem;
   }
 }
@@ -64,7 +79,7 @@
 }
 
 .footer-email {
-    margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .footer-icons {
@@ -86,6 +101,6 @@
 
 .copyright {
   margin-bottom: 1.5rem;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   opacity: 0.8;
 }

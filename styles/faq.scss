@@ -1,14 +1,14 @@
-
-
 @font-face {
-font-family: 'agatho'; /* Name you'll use in CSS */
-src: url('../public/fonts/Agatho_Regular.otf') format('otf');
-font-weight: normal;
-font-style: normal;
+  font-family: 'agatho';
+  /* Name you'll use in CSS */
+  src: url('../public/fonts/Agatho_Regular.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
 }
 
 
-@font-face { font-family: 'roundark';
+@font-face {
+  font-family: 'roundark';
   src: url('../public/fonts/Roundark.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
@@ -21,55 +21,57 @@ font-style: normal;
 
 
 
-.faq-main{
- background-color: #FFF5CA;
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- color: #918A43;
- font-family: agatho;
- padding-top: 6rem;
- padding-bottom: 6rem;
- 
+.faq-main {
+  background-color: #FFF5CA;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #918A43;
+  font-family: agatho;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+
 
 }
 
 
-@media(max-width: 769px){
-  .faq-main{
+@media(max-width: 769px) {
+  .faq-main {
     padding-top: 0;
     padding-bottom: 2rem;
-}
+  }
 }
 
-.faq-head{
-  >h1{
+.faq-head {
+  >h1 {
     font-size: 2rem;
     margin-bottom: 3rem;
     margin-top: 1rem;
     font-family: roundark;
+
   }
 }
 
-@media(max-width: 769px){
-  .faq-head{
-    >h1{
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-  }
+@media(max-width: 769px) {
+  .faq-head {
+    >h1 {
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+    }
   }
 }
 
 
-.faq-block-1{
+.faq-block-1 {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 70%;
 }
-.faq-block-2{
+
+.faq-block-2 {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -79,21 +81,21 @@ font-style: normal;
 
 
 @media (max-width: 769px) {
-  .faq-block-1{
+  .faq-block-1 {
     flex-direction: column;
-    width: 100%;
+    width: 90%;
   }
 
-  .faq-block-2{
+  .faq-block-2 {
     flex-direction: column;
-    width: 100%;
+    width: 90%;
   }
 }
 
 
 
 
-.faq-container{
+.faq-container {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   margin-bottom: 1rem;
@@ -105,61 +107,61 @@ font-style: normal;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 769px) {
- .faq-container{
-  margin-left: 2rem;
-  margin-right: 2rem;
-  margin-bottom: 1rem;
+  .faq-container {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 1rem;
 
-  background-color: #918a43;
-  border-radius: 10px;
-  color: #fff5ca;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} 
+    background-color: #918a43;
+    border-radius: 10px;
+    color: #fff5ca;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
-.faq-c-head{
+.faq-c-head {
   padding: 10px;
   font-size: 1.2rem;
   line-height: 1em;
 }
 
-.faq-c-des{
+.faq-c-des {
   padding: 0 0 16px 16px;
-line-height: 1em;
-font-size: 0.8rem;
-font-family: helvetica;
+  line-height: 1em;
+  font-size: 0.8rem;
+  font-family: helvetica;
 
 }
 
-.faq-test{
+.faq-test {
   margin: 2rem;
   background-color: #918a43;
   border-radius: 10px;
   color: #fff5ca;
-  margin-top: 6rem;  
+  margin-top: 6rem;
   line-height: 1em;
   display: none;
 
 }
 
-@media (max-width: 769px){
-  .faq-test{
+@media (max-width: 769px) {
+  .faq-test {
     display: block;
   }
 }
 
-.faq-test-name{
-  padding: 1rem; 
+.faq-test-name {
+  padding: 1rem;
 }
 
-.faq-test-para{
+.faq-test-para {
   padding: 1rem;
 }
 
@@ -170,6 +172,7 @@ font-family: helvetica;
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -181,6 +184,7 @@ font-family: helvetica;
     opacity: 0;
     transform: translateY(30px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -215,6 +219,11 @@ font-family: helvetica;
   padding-top: 6rem;
   padding-bottom: 6rem;
   overflow: hidden; // Prevents slight horizontal scroll during scale animation
+
+  @media (max-width: 769px) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
 }
 
 // ... Keep your existing media queries and layout styles ...

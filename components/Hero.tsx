@@ -10,12 +10,12 @@ const Hero = () => {
     const handleResize = () => {
       if (window.innerWidth < 769) {
         setSources({
-          video: "/newmo.mp4",
+          video: "/mobnewvid.mp4",
           poster: "/fallbackmobile.webp",
         });
       } else {
         setSources({
-          video: "/moju.mp4",
+          video: "/pcnewvid.mp4",
           poster: "/fallbackpc.webp",
         });
       }

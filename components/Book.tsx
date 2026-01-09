@@ -35,6 +35,7 @@ const Book = () => {
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+  const [bookingId, setBookingId] = useState<number | null>(null);
 
   // Intersection Observer Logic
   useEffect(() => {
@@ -125,11 +126,116 @@ const Book = () => {
     setFormData((prev) => ({ ...prev, booking_time: time }));
   };
 
-  const handlePayLater = async () => {
-    /* ... existing logic ... */
+  const handleSubmit = async () => {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.service ||
+      !formData.booking_date ||
+      !formData.booking_time
+    ) {
+      alert("Please fill all required fields");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      setBookingId(data.booking.id);
+      alert(
+        "Booking submitted successfully! Please proceed to payment to confirm your slot.",
+      );
+    } catch (error: any) {
+      console.error("Booking error:", error);
+      alert(error.message || "Failed to submit booking");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
   const handlePayNow = async () => {
-    /* ... existing logic ... */
+    if (!bookingId) return;
+
+    setIsSubmitting(true);
+    try {
+      // Create Razorpay Order
+      const res = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bookingId,
+          service: formData.service,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      const options = {
+        key: data.order.key,
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: "Inheal",
+        description: `Payment for ${formData.service}`,
+        order_id: data.order.id,
+        handler: async function (response: any) {
+          try {
+            const verifyRes = await fetch("/api/payment/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...response,
+                booking_id: bookingId,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+            if (!verifyRes.ok) throw new Error(verifyData.error);
+
+            alert("Payment successful! Your booking is confirmed.");
+            // Reset form or redirect
+            setFormData({
+              name: "",
+              email: "",
+              age: "",
+              phone: "",
+              service: "",
+              booking_date: "",
+              booking_time: "",
+            });
+            setSelectedDate(undefined);
+            setBookingId(null);
+          } catch (error: any) {
+            console.error("Payment verification error:", error);
+            alert("Payment verification failed. Please contact support.");
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+        },
+        theme: {
+          color: "#918a43",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error: any) {
+      console.error("Payment initiation error:", error);
+      alert(error.message || "Failed to initiate payment");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -209,10 +315,10 @@ const Book = () => {
               required
             >
               <option value="">Select your service</option>
-              <option value="consultation">Consultation</option>
-              <option value="therapy">Therapy Session</option>
-              <option value="coaching">Coaching</option>
-              <option value="workshop">Workshop</option>
+              <option value="individual_session">Individual Session</option>
+              <option value="group_session">Group Session</option>
+              <option value="environmental_session">Environmental Session</option>
+              <option value="customisable_session">Customisable Session</option>
             </select>
           </div>
         </div>
@@ -261,13 +367,12 @@ const Book = () => {
                     type="button"
                     onClick={() => !isBooked && handleTimeSelect(slot.value)}
                     disabled={isBooked}
-                    className={`p-3 rounded text-left transition-all ${
-                      isBooked
-                        ? "opacity-50 cursor-not-allowed bg-gray-200"
-                        : isSelected
-                          ? "bg-[#5A7C8A] text-white"
-                          : "bg-transparent border-2 border-[#918a43]"
-                    }`}
+                    className={`p-3 rounded text-left transition-all ${isBooked
+                      ? "opacity-50 cursor-not-allowed bg-gray-200"
+                      : isSelected
+                        ? "bg-[#5A7C8A] text-white"
+                        : "bg-transparent border-2 border-[#918a43]"
+                      }`}
                     style={{
                       fontFamily: "helvetica",
                       color: isBooked
@@ -300,23 +405,29 @@ const Book = () => {
               paddingTop: "24px",
             }}
           >
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-4">
               <button
-                onClick={handlePayNow}
-                disabled={isSubmitting}
-                className="w-full py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-                style={{ backgroundColor: "#918a43", color: "#f5e6b3" }}
-              >
-                {isSubmitting ? "PROCESSING..." : "PAY NOW"}
-              </button>
-              <button
-                onClick={handlePayLater}
-                disabled={isSubmitting}
+                onClick={handleSubmit}
+                disabled={isSubmitting || !!bookingId}
                 className="w-full py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
                 style={{ backgroundColor: "#918a43", color: "#fff5ca" }}
               >
-                {isSubmitting ? "PROCESSING..." : "PAY LATER"}
+                {bookingId
+                  ? "SUBMITTED"
+                  : isSubmitting
+                    ? "PROCESSING..."
+                    : "SUBMIT"}
               </button>
+              {bookingId && (
+                <button
+                  onClick={handlePayNow}
+                  disabled={isSubmitting}
+                  className="w-full py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                  style={{ backgroundColor: "#918a43", color: "#f5e6b3" }}
+                >
+                  {isSubmitting ? "PROCESSING..." : "CONFIRM & PAY"}
+                </button>
+              )}
             </div>
           </div>
         </div>

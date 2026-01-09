@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   service VARCHAR(100) NOT NULL,
   booking_date DATE NOT NULL,
   booking_time TIME NOT NULL,
-  preferred_time_slot VARCHAR(50),
+
   payment_status VARCHAR(50) DEFAULT 'pending',
   razorpay_order_id VARCHAR(255),
   razorpay_payment_id VARCHAR(255),

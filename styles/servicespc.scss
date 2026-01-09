@@ -1,10 +1,12 @@
-@font-face { font-family: 'agatho';
+@font-face {
+  font-family: 'agatho';
   src: url('../public/fonts/Agatho_Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
-@font-face { font-family: 'roundark';
+@font-face {
+  font-family: 'roundark';
   src: url('../public/fonts/Roundark.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
@@ -24,7 +26,7 @@
 }
 
 @media (max-width: 769px) {
-  .servicepc{
+  .servicepc {
     display: none;
   }
 }
@@ -49,45 +51,60 @@
 /* Decorative Elements with Animations */
 
 @keyframes float-gentle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.5) translate(0, 0);
   }
+
   25% {
     transform: scale(0.6) translate(10px, -8px);
   }
+
   50% {
     transform: scale(0.7) translate(-5px, 5px);
   }
+
   75% {
     transform: scale(0.5) translate(8px, 3px);
   }
 }
 
 @keyframes drift-small {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.4) translate(0, 0);
   }
+
   33% {
     transform: scale(0.6) translate(-8px, 6px);
   }
+
   66% {
     transform: scale(0.4) translate(6px, -4px);
   }
 }
 
 @keyframes sway-tiny {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.4) translate(0, 0) rotate(0deg);
   }
+
   50% {
     transform: scale(0.5) translate(5px, -5px) rotate(10deg);
   }
 }
 
 @keyframes float-slow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.5) translate(0, 0) rotate(0deg);
   }
+
   50% {
     transform: scale(0.7) translate(-6px, 8px) rotate(-20deg);
   }
@@ -96,12 +113,12 @@
 /* Decorative Elements */
 .purple-spiral-pc {
   position: absolute;
-  width:120px;
-  height:115px;
+  width: 120px;
+  height: 115px;
   top: 10%;
   right: 45%;
   z-index: 10;
-  opacity: 0.9;  
+  opacity: 0.9;
   transform: scale(0.8);
   animation: float-gentle 8s ease-in-out infinite;
 
@@ -135,21 +152,22 @@
 
 
 //========================
-.purple-small-pc{
+.purple-small-pc {
   position: absolute;
-  
+
   bottom: 13%;
   right: 42%;
   z-index: 10;
   opacity: 0.8;
- 
- transform: scale(0.6);
-animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
+
+  transform: scale(0.6);
+  animation: drift-small 9s ease-in-out infinite 1s;
+  /* 1s delay */
 
 }
 
 //============================
-.yellow-star-pc{
+.yellow-star-pc {
   position: absolute;
 
   bottom: 43%;
@@ -157,33 +175,36 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.5);
-animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
+  animation: drift-small 9s ease-in-out infinite 1s;
+  /* 1s delay */
 
 }
 
 //=======================
-.purple-leaf-pc{
+.purple-leaf-pc {
   position: absolute;
 
   bottom: 45%;
   left: 10%;
   z-index: 10;
   opacity: 0.8;
- 
+
   transform: scale(0.6);
-  animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
+  animation: drift-small 9s ease-in-out infinite 1s;
+  /* 1s delay */
 
 }
 
 //=============================
-.pink-paw-pc{
+.pink-paw-pc {
   position: absolute;
-    bottom: 45%;
+  bottom: 45%;
   left: 80%;
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.6);
-  animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
+  animation: drift-small 9s ease-in-out infinite 1s;
+  /* 1s delay */
 
 }
 
@@ -203,14 +224,14 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
 }
 
 .servicepc-img-1 {
- 
+
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-   padding: 4rem 4rem;
+  padding: 4rem 4rem;
 
 
 
@@ -257,15 +278,15 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
 }
 
 .servicepc-img-rel h3 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: normal;
   margin: 0 0 1rem 0;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 .servicepc-img-rel p {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1;
   margin: 0;
   color: #FFF5CA;
 }
@@ -303,7 +324,8 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
     height: 340px;
   }
 
-  .circle-3, .circle-4 {
+  .circle-3,
+  .circle-4 {
     width: 330px;
     height: 330px;
   }
@@ -325,12 +347,14 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
     font-size: 1.3rem;
   }
 
-  .deco-arrow, .deco-starfish {
+  .deco-arrow,
+  .deco-starfish {
     width: 60px;
     height: 60px;
   }
 
-  .deco-leaf-top, .deco-leaf-bottom {
+  .deco-leaf-top,
+  .deco-leaf-bottom {
     width: 50px;
     height: 50px;
   }
@@ -347,7 +371,8 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
     height: 360px;
   }
 
-  .circle-3, .circle-4 {
+  .circle-3,
+  .circle-4 {
     width: 330px;
     height: 360px;
   }
@@ -367,27 +392,27 @@ animation: drift-small 9s ease-in-out infinite 1s; /* 1s delay */
     padding-bottom: 20px;
     margin-block-end: 0em;
     margin-block-start: 0em;
-   
+
   }
 
   .servicepc-img-rel p {
     font-size: 1rem;
     line-height: 1em;
   }
- 
+
   .servicepc-des p {
     font-size: 1rem;
   }
 }
 
 
-.servicepc-block-1{
+.servicepc-block-1 {
   display: flex;
   flex-direction: row;
 }
 
 
-.servicepc-block-2{
+.servicepc-block-2 {
   display: flex;
   flex-direction: row;
 }

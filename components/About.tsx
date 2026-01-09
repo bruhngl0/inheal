@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../styles/about.scss";
 
 const About = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const headRef = useRef<HTMLDivElement>(null);
   const text1Ref = useRef<HTMLParagraphElement>(null);
@@ -11,10 +12,7 @@ const About = () => {
   const decorRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
-  // Mobile refs
-  const mobileImgRef = useRef<HTMLImageElement>(null);
-  const mobileHeadRef = useRef<HTMLDivElement>(null);
-  const mobileDesRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const observerOptions = {
@@ -39,10 +37,7 @@ const About = () => {
     if (decorRef.current) observer.observe(decorRef.current);
     if (lineRef.current) observer.observe(lineRef.current);
 
-    // Observe mobile elements
-    if (mobileImgRef.current) observer.observe(mobileImgRef.current);
-    if (mobileHeadRef.current) observer.observe(mobileHeadRef.current);
-    if (mobileDesRef.current) observer.observe(mobileDesRef.current);
+
 
     return () => observer.disconnect();
   }, []);
@@ -85,7 +80,7 @@ const About = () => {
             </p>
             <p
               ref={text2Ref}
-              className="about-pc-des-text-p2 scroll-animate"
+              className={`about-pc-des-text-p1 scroll-animate ${!isExpanded ? "mobile-hidden" : ""}`}
               style={{ animationDelay: "0.2s" }}
             >
               My journey began in psychology, however along the way, I felt
@@ -95,8 +90,9 @@ const About = () => {
             </p>
             <p
               ref={readMoreRef}
-              className="about-pc-des-text-readmore scroll-animate"
+              className={`about-pc-des-text-readmore scroll-animate ${isExpanded ? "mobile-hidden" : ""}`}
               style={{ animationDelay: "0.3s" }}
+              onClick={() => setIsExpanded(true)}
             >
               Read more
             </p>
@@ -138,37 +134,7 @@ const About = () => {
       </div>
 
       {/* Mobile Version */}
-      <div className="about">
-        <div className="about-main">
-          <img
-            ref={mobileImgRef}
-            src="about-inheal.png"
-            alt="about"
-            className="about-main-img scroll-animate"
-          />
-        </div>
-        <div className="about-main-des">
-          <div
-            ref={mobileHeadRef}
-            className="about-main-des-head scroll-animate"
-            style={{ animationDelay: "0.1s" }}
-          >
-            <h1>About us</h1>
-          </div>
-          <div
-            ref={mobileDesRef}
-            className="about-main-des-des scroll-animate"
-            style={{ animationDelay: "0.2s" }}
-          >
-            <p>
-              Inheal is a gentle space shaped around the belief that creativity
-              can restore the mind, soften emotion, and bring people back to
-              themselves. Our approach to art therapy is slow, mindful, and
-              deeply human.
-            </p>
-          </div>
-        </div>
-      </div>
+
     </>
   );
 };

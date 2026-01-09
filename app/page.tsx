@@ -29,11 +29,11 @@ export default function Home() {
         <Qafs />
       </div>
 
-      <div>
+      <div id="blog">
         <Faqs />
       </div>
 
-      <div id="blog">
+      <div>
         <Blogs />
       </div>
       <div id="contact">

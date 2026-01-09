@@ -33,26 +33,36 @@ const Footer = () => {
       </div>
 
       <div className="footer-des scroll-animate">
-        <p>Cleansing mind through art</p>
+        <p>Healing Through Art</p>
       </div>
 
       <div className="footer-number scroll-animate">
-        <p>+91 9191919191</p>
+        <a href="tel:+919148874678" style={{ color: 'inherit', textDecoration: 'none' }}>
+          <p>91488 74678</p>
+        </a>
       </div>
 
       <div className="footer-email scroll-animate">
-        inhealarttherapy@gmail.com
+        <a href="mailto:Inheal.art@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>
+          Inheal.art@gmail.com
+        </a>
       </div>
 
       <div className="footer-icons scroll-animate">
         <div className="icons">
-          <img src="whatsapp.svg" alt="wa" />
+          <a href="https://wa.me/919148874678" target="_blank" rel="noopener noreferrer">
+            <img src="whatsapp.svg" alt="wa" />
+          </a>
         </div>
         <div className="icons">
-          <img src="insta.svg" alt="in" />
+          <a href="https://www.instagram.com/inheal.art?igsh=dGtodXpzZXNscmN6" target="_blank" rel="noopener noreferrer">
+            <img src="insta.svg" alt="in" />
+          </a>
         </div>
         <div className="icons">
-          <img src="ln.png" alt="ic" />
+          <a href="https://www.linkedin.com/in/parita-kanunga-985389200?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer">
+            <img src="ln.png" alt="ic" />
+          </a>
         </div>
       </div>
 

@@ -1,10 +1,12 @@
-@font-face { font-family: 'agatho';
+@font-face {
+  font-family: 'agatho';
   src: url('../public/fonts/Agatho_Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
-@font-face { font-family: 'roundark';
+@font-face {
+  font-family: 'roundark';
   src: url('../public/fonts/Roundark.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
@@ -24,7 +26,7 @@
 }
 
 @media (min-width: 769px) {
-  .service{
+  .service {
     display: none;
   }
 }
@@ -53,57 +55,73 @@
 /* Decorative Elements with Animations */
 
 @keyframes float-gentle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.5) translate(0, 0);
   }
+
   25% {
     transform: scale(0.5) translate(10px, -8px);
   }
+
   50% {
     transform: scale(0.5) translate(-5px, 5px);
   }
+
   75% {
     transform: scale(0.5) translate(8px, 3px);
   }
 }
 
 @keyframes drift-small {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.4) translate(0, 0);
   }
+
   33% {
     transform: scale(0.4) translate(-8px, 6px);
   }
+
   66% {
     transform: scale(0.4) translate(6px, -4px);
   }
 }
 
 @keyframes sway-tiny {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.4) translate(0, 0) rotate(0deg);
   }
+
   50% {
     transform: scale(0.4) translate(5px, -5px) rotate(3deg);
   }
 }
 
 @keyframes float-slow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.5) translate(0, 0) rotate(0deg);
   }
+
   50% {
     transform: scale(0.5) translate(-6px, 8px) rotate(-2deg);
   }
 }
+
 .purple-spiral {
   position: absolute;
-  width:120px;
-  height:115px;
+  width: 120px;
+  height: 115px;
   top: 22%;
   right: 3%;
   z-index: 10;
-  opacity: 0.9;  
+  opacity: 0.9;
   transform: scale(0.5);
   animation: float-gentle 4s ease-in-out infinite;
 }
@@ -117,7 +135,7 @@
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.4);
-animation: drift-small 6s ease-in-out infinite;
+  animation: drift-small 6s ease-in-out infinite;
 }
 
 //====================
@@ -129,24 +147,25 @@ animation: drift-small 6s ease-in-out infinite;
   z-index: 10;
   opacity: 0.85;
   transform: scale(0.4);
- animation: sway-tiny 5s ease-in-out infinite;
+  animation: sway-tiny 5s ease-in-out infinite;
 }
 
 
 //========================
-.purple-small{
+.purple-small {
   position: absolute;
-  
+
   bottom: -1%;
   right: 58%;
   z-index: 10;
   opacity: 0.8;
- transform: scale(0.4);
-animation: drift-small 6s ease-in-out infinite 1s; /* 1s delay */
+  transform: scale(0.4);
+  animation: drift-small 6s ease-in-out infinite 1s;
+  /* 1s delay */
 }
 
 //============================
-.yellow-star{
+.yellow-star {
   position: absolute;
 
   bottom: 43%;
@@ -154,11 +173,12 @@ animation: drift-small 6s ease-in-out infinite 1s; /* 1s delay */
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.4);
-  animation: sway-tiny 5s ease-in-out infinite 2s; /* 2s delay */
+  animation: sway-tiny 5s ease-in-out infinite 2s;
+  /* 2s delay */
 }
 
 //=======================
-.purple-leaf{
+.purple-leaf {
   position: absolute;
 
   bottom: 65%;
@@ -166,18 +186,19 @@ animation: drift-small 6s ease-in-out infinite 1s; /* 1s delay */
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.5);
-animation: float-slow 7s ease-in-out infinite;
+  animation: float-slow 7s ease-in-out infinite;
 }
 
 //=============================
-.pink-paw{
+.pink-paw {
   position: absolute;
-    bottom: 90%;
+  bottom: 90%;
   left: 57%;
   z-index: 10;
   opacity: 0.8;
   transform: scale(0.4);
-animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
+  animation: drift-small 8s ease-in-out infinite 3s;
+  /* 3s delay */
 }
 
 
@@ -197,14 +218,14 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
 }
 
 .service-img-1 {
- 
+
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-   padding: 4rem 4rem;
+  padding: 4rem 4rem;
 
 
 
@@ -258,7 +279,7 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
 }
 
 .service-img-rel p {
-  font-size: 1rem;
+  font-size: 5rem;
   line-height: 1.6;
   margin: 0;
   color: #FFF5CA;
@@ -281,10 +302,14 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
   font-style: italic;
 }
 
+.service-img-rel p {
+  font-size: 2rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .service-head h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .circle-bg {
@@ -297,7 +322,8 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
     height: 340px;
   }
 
-  .circle-3, .circle-4 {
+  .circle-3,
+  .circle-4 {
     width: 330px;
     height: 330px;
   }
@@ -319,12 +345,14 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
     font-size: 1.3rem;
   }
 
-  .deco-arrow, .deco-starfish {
+  .deco-arrow,
+  .deco-starfish {
     width: 60px;
     height: 60px;
   }
 
-  .deco-leaf-top, .deco-leaf-bottom {
+  .deco-leaf-top,
+  .deco-leaf-bottom {
     width: 50px;
     height: 50px;
   }
@@ -341,7 +369,8 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
     height: 360px;
   }
 
-  .circle-3, .circle-4 {
+  .circle-3,
+  .circle-4 {
     width: 330px;
     height: 360px;
   }
@@ -351,7 +380,7 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
   }
 
   .service-img-rel h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .service-img-rel h3 {
@@ -361,11 +390,11 @@ animation: drift-small 8s ease-in-out infinite 3s; /* 3s delay */
     padding-bottom: 20px;
     margin-block-end: 0em;
     margin-block-start: 0em;
-   
+
   }
 
   .service-img-rel p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1em;
   }
 
