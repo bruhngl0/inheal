@@ -334,15 +334,26 @@
   }
 
   .service-img-rel h2 {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .service-img-rel h3 {
-    font-size: 2rem;
+    font-size: 1.6rem;
+    line-height: 1em;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    margin-block-end: 0em;
+    margin-block-start: 0em;
+
   }
 
   .service-img-rel p {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    line-height: 1em;
+  }
+
+  .service-des p {
+    font-size: 1rem;
   }
 
   .deco-arrow,

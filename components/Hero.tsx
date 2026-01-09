@@ -10,7 +10,7 @@ const Hero = () => {
     const handleResize = () => {
       if (window.innerWidth < 769) {
         setSources({
-          video: "/mobnewvid.mp4",
+          video: "/popa.mp4",
           poster: "/fallbackmobile.webp",
         });
       } else {
