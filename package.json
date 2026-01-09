@@ -18,7 +18,8 @@
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.2.3",
     "resend": "^6.6.0",
-    "sass": "^1.94.2"
+    "sass": "^1.94.2",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

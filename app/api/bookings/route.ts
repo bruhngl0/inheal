@@ -1,18 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
 
+import { z } from 'zod';
+
+const bookingSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  age: z.string().optional().or(z.number().optional()), // Allow string or number for age input
+  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
+  service: z.enum(['individual_session', 'group_session', 'environmental_session', 'customisable_session']),
+  booking_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
+  booking_time: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time format (HH:MM)'),
+});
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, age, phone, service, booking_date, booking_time } = body;
 
-    // Basic validation
-    if (!name || !email || !service || !booking_date || !booking_time) {
+    // Zod Validation
+    const validation = bookingSchema.safeParse(body);
+
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Validation failed', details: validation.error.format() },
         { status: 400 }
       );
     }
+
+    const { name, email, age, phone, service, booking_date, booking_time } = validation.data;
 
     // Check if the slot is already booked (only paid bookings block slots)
     const checkSlot = await pool.query(

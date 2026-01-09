@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react"; // Added useRef
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"; // Added useCallback, useMemo
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import "../styles/book.scss";
@@ -11,6 +11,20 @@ declare global {
     Razorpay: any;
   }
 }
+
+// Moved outside to prevent recreation on every render
+const timeSlots = [
+  { value: "09:00", label: "9:00 AM" },
+  { value: "10:00", label: "10:00 AM" },
+  { value: "11:00", label: "11:00 AM" },
+  { value: "12:00", label: "12:00 PM" },
+  { value: "13:00", label: "1:00 PM" },
+  { value: "14:00", label: "2:00 PM" },
+  { value: "15:00", label: "3:00 PM" },
+  { value: "16:00", label: "4:00 PM" },
+  { value: "17:00", label: "5:00 PM" },
+  { value: "18:00", label: "6:00 PM" },
+];
 
 const Book = () => {
   // Animation Refs
@@ -68,20 +82,6 @@ const Book = () => {
     return () => observer.disconnect();
   }, []);
 
-  // ... (Keep your existing timeSlots, Razorpay useEffect, and handle functions)
-  const timeSlots = [
-    { value: "09:00", label: "9:00 AM" },
-    { value: "10:00", label: "10:00 AM" },
-    { value: "11:00", label: "11:00 AM" },
-    { value: "12:00", label: "12:00 PM" },
-    { value: "13:00", label: "1:00 PM" },
-    { value: "14:00", label: "2:00 PM" },
-    { value: "15:00", label: "3:00 PM" },
-    { value: "16:00", label: "4:00 PM" },
-    { value: "17:00", label: "5:00 PM" },
-    { value: "18:00", label: "6:00 PM" },
-  ];
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -103,30 +103,32 @@ const Book = () => {
     }
   }, [selectedDate]);
 
-  const handleInputChange = (
+  const handleInputChange = useCallback((
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const handleDateSelect = (date: Date | undefined) => {
+  const handleDateSelect = useCallback((date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
-      const dateStr = date.toISOString().split("T")[0];
+      // Normalize date to prevent timezone issues
+      const offsetDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+      const dateStr = offsetDate.toISOString().split("T")[0];
       setFormData((prev) => ({
         ...prev,
         booking_date: dateStr,
         booking_time: "",
       }));
     }
-  };
+  }, []);
 
-  const handleTimeSelect = (time: string) => {
+  const handleTimeSelect = useCallback((time: string) => {
     setFormData((prev) => ({ ...prev, booking_time: time }));
-  };
+  }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (
       !formData.name ||
       !formData.email ||
@@ -147,7 +149,7 @@ const Book = () => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) throw new Error(data.error || "Failed to submit booking");
 
       setBookingId(data.booking.id);
       alert(
@@ -155,13 +157,17 @@ const Book = () => {
       );
     } catch (error: any) {
       console.error("Booking error:", error);
-      alert(error.message || "Failed to submit booking");
+      // More robust error message handling
+      const errorMessage = error.message === "Validation failed"
+        ? "Please check your input details."
+        : (error.message || "Failed to submit booking");
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [formData]);
 
-  const handlePayNow = async () => {
+  const handlePayNow = useCallback(async () => {
     if (!bookingId) return;
 
     setIsSubmitting(true);
@@ -236,9 +242,13 @@ const Book = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  }, [bookingId, formData]);
+
+  const today = useMemo(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, []);
 
   return (
     <div className="booking-main">
