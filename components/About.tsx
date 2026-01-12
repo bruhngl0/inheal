@@ -4,7 +4,6 @@ import "../styles/about.scss";
 
 const About = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const headRef = useRef<HTMLDivElement>(null);
   const text1Ref = useRef<HTMLParagraphElement>(null);
@@ -41,41 +40,19 @@ const About = () => {
 
   return (
     <>
-      {/* Hidden SVG for clip-path */}
-      <svg width="0" height="0" style={{ position: "absolute" }}>
-        <defs>
-          <clipPath id="blob-shape" clipPathUnits="objectBoundingBox">
-            <path d="M 0.114,0.336 C 0.269,0.096 0.501,-0.097 0.749,0.053 C 0.997,0.202 1.073,0.518 0.918,0.758 C 0.764,0.998 0.437,1.071 0.189,0.921 C -0.059,0.771 -0.041,0.576 0.114,0.336 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-
       {/* Desktop Version */}
       <div className="about-pc">
         <div className="about-pc-img">
           <img
             ref={imgRef}
-            src="/about-pari.png"
+            src="/parioo.png"
             alt="about"
             className="about-pc-img-img scroll-animate"
             onError={(e) => {
-              console.error("Image failed to load");
-              setImageError(true);
-              // Try alternative path
-              e.currentTarget.src = "./about-pari.png";
+              e.currentTarget.src = "./parioo.png";
             }}
             loading="eager"
-            style={{
-              display: imageError ? "none" : "block",
-              WebkitClipPath: "url(#blob-shape)",
-              clipPath: "url(#blob-shape)",
-            }}
           />
-          {imageError && (
-            <div style={{ padding: "20px", color: "#666" }}>
-              Image could not be loaded. Please check the file path.
-            </div>
-          )}
         </div>
         <div className="about-pc-des">
           <div ref={headRef} className="about-pc-des-head scroll-animate">

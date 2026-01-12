@@ -149,7 +149,7 @@
   width: 250px;
   height: 250px;
   object-fit: cover;
-  clip-path: url(#blob-shape);
+
   display: block;
   margin-top: 5rem;
 }
@@ -323,8 +323,6 @@
 }
 
 .about-pc-img-img {
-  -webkit-clip-path: url(#blob-shape);
-  clip-path: url(#blob-shape);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
