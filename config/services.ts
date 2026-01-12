@@ -22,5 +22,5 @@ export const services = {
 };
 
 export const getServicePrice = (service: string): number => {
-  return services[service as keyof typeof services]?.price || 2000;
+  return services[service as keyof typeof services]?.price || 1;
 };

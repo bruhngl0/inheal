@@ -103,18 +103,21 @@ const Book = () => {
     }
   }, [selectedDate]);
 
-  const handleInputChange = useCallback((
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }, []);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    },
+    [],
+  );
 
   const handleDateSelect = useCallback((date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
       // Normalize date to prevent timezone issues
-      const offsetDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+      const offsetDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000,
+      );
       const dateStr = offsetDate.toISOString().split("T")[0];
       setFormData((prev) => ({
         ...prev,
@@ -158,9 +161,10 @@ const Book = () => {
     } catch (error: any) {
       console.error("Booking error:", error);
       // More robust error message handling
-      const errorMessage = error.message === "Validation failed"
-        ? "Please check your input details."
-        : (error.message || "Failed to submit booking");
+      const errorMessage =
+        error.message === "Validation failed"
+          ? "Please check your input details."
+          : error.message || "Failed to submit booking";
       alert(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -327,8 +331,11 @@ const Book = () => {
               <option value="">Select your service</option>
               <option value="individual_session">Individual Session</option>
               <option value="group_session">Group Session</option>
-              <option value="environmental_session">Environmental Session</option>
+              <option value="environmental_session">
+                Environmental Session
+              </option>
               <option value="customisable_session">Customisable Session</option>
+              <option value="test">test</option>
             </select>
           </div>
         </div>
@@ -377,12 +384,13 @@ const Book = () => {
                     type="button"
                     onClick={() => !isBooked && handleTimeSelect(slot.value)}
                     disabled={isBooked}
-                    className={`p-3 rounded text-left transition-all ${isBooked
-                      ? "opacity-50 cursor-not-allowed bg-gray-200"
-                      : isSelected
-                        ? "bg-[#5A7C8A] text-white"
-                        : "bg-transparent border-2 border-[#918a43]"
-                      }`}
+                    className={`p-3 rounded text-left transition-all ${
+                      isBooked
+                        ? "opacity-50 cursor-not-allowed bg-gray-200"
+                        : isSelected
+                          ? "bg-[#5A7C8A] text-white"
+                          : "bg-transparent border-2 border-[#918a43]"
+                    }`}
                     style={{
                       fontFamily: "helvetica",
                       color: isBooked
