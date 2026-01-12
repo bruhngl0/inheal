@@ -335,7 +335,7 @@ const Book = () => {
                 Environmental Session
               </option>
               <option value="customisable_session">Customisable Session</option>
-              <option value="test">test</option>
+
             </select>
           </div>
         </div>
@@ -384,13 +384,12 @@ const Book = () => {
                     type="button"
                     onClick={() => !isBooked && handleTimeSelect(slot.value)}
                     disabled={isBooked}
-                    className={`p-3 rounded text-left transition-all ${
-                      isBooked
+                    className={`p-3 rounded text-left transition-all ${isBooked
                         ? "opacity-50 cursor-not-allowed bg-gray-200"
                         : isSelected
                           ? "bg-[#5A7C8A] text-white"
                           : "bg-transparent border-2 border-[#918a43]"
-                    }`}
+                      }`}
                     style={{
                       fontFamily: "helvetica",
                       color: isBooked
