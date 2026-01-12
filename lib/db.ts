@@ -1,4 +1,4 @@
-import { Pool, PoolConfig } from 'pg';
+import { Pool, PoolConfig } from "pg";
 
 let pool: Pool;
 
@@ -10,8 +10,8 @@ const dbConfig: PoolConfig = {
 };
 
 if (!process.env.DATABASE_URL) {
-  console.log('⚠️ Using LOCAL database');
-  dbConfig.host = process.env.DB_HOST || 'localhost';
+  console.log("⚠️ Using LOCAL database");
+  dbConfig.host = process.env.DB_HOST || "localhost";
   // ... rest of your local config
 } else {
   // Enhanced SSL config for Cloud/Neon
@@ -21,10 +21,10 @@ if (!process.env.DATABASE_URL) {
 }
 
 // Singleton pattern logic
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   pool = new Pool(dbConfig);
 } else {
-  let globalWithPool = global as typeof globalThis & {
+  const globalWithPool = global as typeof globalThis & {
     postgresPool?: Pool;
   };
   if (!globalWithPool.postgresPool) {
@@ -34,8 +34,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Add an error listener to the pool to prevent the app from crashing
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
+pool.on("error", (err) => {
+  console.error("Unexpected error on idle client", err);
 });
 
 export default pool;
+

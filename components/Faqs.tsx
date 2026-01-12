@@ -1,25 +1,20 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import "../styles/faq.scss";
 
 const testimonialData = [
   {
     id: 1,
-    title: "What is Art Therapy?",
-    text: "Art therapy is a form of psychotherapy that uses the creative process of making art to improve m...........",
+    title: "What is Environmental Art Therapy?",
+    text: "Healing does not only happen within four walls. For many individuals, nature itself becomes a quiet therapeutic...",
+    link: "https://substack.com/@inheal/note/c-197366208?r=76pdm0&utm_medium=ios&utm_source=notes-share-action",
   },
   {
     id: 2,
-    title: "What is Art Therapy?",
-    text: "Art therapy is a form of psychotherapy that uses the creative process of making art to improve m...........",
+    title: "When Words Feel Hard!",
+    text: "There are moments in life when words fall short. Emotions feel too complex, too heavy, or too distant to name...",
+    link: "https://substack.com/@inheal/note/c-197756790?r=76pdm0&utm_medium=ios&utm_source=notes-share-action",
   },
-  {
-    id: 3,
-    title: "What is Art Therapy?",
-    text: "Art therapy is a form of psychotherapy that uses the creative process of making art to improve m...........",
-  },
-
 ];
 
 const Faqs = () => {
@@ -41,7 +36,6 @@ const Faqs = () => {
     }, observerOptions);
 
     if (headRef.current) observer.observe(headRef.current);
-
     cardRefs.current.forEach((card) => {
       if (card) observer.observe(card);
     });
@@ -65,6 +59,7 @@ const Faqs = () => {
             }}
             className="faq-container scroll-animate"
             style={{ animationDelay: `${idx * 0.2}s` }}
+            onClick={() => window.open(item.link, "_blank")}
           >
             <div className="faq-c-head">
               <p>{item.title}</p>
@@ -86,6 +81,7 @@ const Faqs = () => {
             }}
             className="faq-container scroll-animate"
             style={{ animationDelay: `${idx * 0.2}s` }}
+            onClick={() => window.open(item.link, "_blank")}
           >
             <div className="faq-c-head">
               <p>{item.title}</p>
