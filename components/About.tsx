@@ -4,6 +4,7 @@ import "../styles/about.scss";
 
 const About = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const headRef = useRef<HTMLDivElement>(null);
   const text1Ref = useRef<HTMLParagraphElement>(null);
@@ -11,8 +12,6 @@ const About = () => {
   const readMoreRef = useRef<HTMLParagraphElement>(null);
   const decorRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
-
-
 
   useEffect(() => {
     const observerOptions = {
@@ -37,8 +36,6 @@ const About = () => {
     if (decorRef.current) observer.observe(decorRef.current);
     if (lineRef.current) observer.observe(lineRef.current);
 
-
-
     return () => observer.disconnect();
   }, []);
 
@@ -58,10 +55,27 @@ const About = () => {
         <div className="about-pc-img">
           <img
             ref={imgRef}
-            src="about-pari.png"
+            src="/about-pari.png"
             alt="about"
             className="about-pc-img-img scroll-animate"
+            onError={(e) => {
+              console.error("Image failed to load");
+              setImageError(true);
+              // Try alternative path
+              e.currentTarget.src = "./about-pari.png";
+            }}
+            loading="eager"
+            style={{
+              display: imageError ? "none" : "block",
+              WebkitClipPath: "url(#blob-shape)",
+              clipPath: "url(#blob-shape)",
+            }}
           />
+          {imageError && (
+            <div style={{ padding: "20px", color: "#666" }}>
+              Image could not be loaded. Please check the file path.
+            </div>
+          )}
         </div>
         <div className="about-pc-des">
           <div ref={headRef} className="about-pc-des-head scroll-animate">
@@ -104,9 +118,12 @@ const About = () => {
           >
             <div className="about-pc-des-decor-img-container">
               <img
-                src="decor.png"
+                src="/decor.png"
                 alt="decor"
                 className="about-pc-des-decor-img"
+                onError={(e) => {
+                  e.currentTarget.src = "./decor.png";
+                }}
               />
             </div>
             <div className="about-pc-des-decor-text">
@@ -125,16 +142,18 @@ const About = () => {
             style={{ animationDelay: "0.5s" }}
           >
             <img
-              src="line.png"
+              src="/line.png"
               alt="line"
               className="about-pc-des-decor-line-img"
+              onError={(e) => {
+                e.currentTarget.src = "./line.png";
+              }}
             />
           </div>
         </div>
       </div>
 
       {/* Mobile Version */}
-
     </>
   );
 };

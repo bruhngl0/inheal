@@ -285,10 +285,13 @@ const Services = () => {
           </svg>
           <div className="service-img-rel">
             <h2>1</h2>
-            <h3>Individual Sessions</h3>
-            <p>
-              A safe and supportive environment for one-to-one interaction to
-              explore emotions, thoughts, and experiences.
+            <h3>
+              Individual <br /> Art Therapy
+            </h3>
+            <p style={{ marginBottom: "20px" }}>
+              One-to-one sessions using art to explore emotions and inner
+              experiences in a safe, supportive space. No artistic skill is
+              needed, the process moves at your pace.
             </p>
           </div>
         </div>
@@ -309,10 +312,10 @@ const Services = () => {
           </svg>{" "}
           <div className="service-img-rel">
             <h2>2</h2>
-            <h3>Group Sessions</h3>
+            <h3>Group Art Therapy</h3>
             <p>
-              Individual supervision sessions for creative therapists, mental
-              health professionals, and those engaging with arts for wellbeing
+              Creative group sessions that encourage connection, expression, and
+              shared reflection through artmaking.
             </p>
           </div>
         </div>
@@ -334,13 +337,12 @@ const Services = () => {
           <div className="service-img-rel">
             <h2>3</h2>
             <h3>
-              Environmental
-              <br /> Sessions
+              Environmental <br /> Art Therapy
             </h3>
             <p>
-              Through engaging in creative activities in groups, participants
-              not only express themselves but also benefit from the power of
-              group dynamics
+              A nature-based therapeutic approach using outdoor spaces and
+              natural materials to support grounding, reflection, and emotional
+              release.
             </p>
           </div>
         </div>
@@ -361,10 +363,11 @@ const Services = () => {
           </svg>{" "}
           <div className="service-img-rel">
             <h2>4</h2>
-            <h3>Customisable Sessions</h3>
+            <h3>Customisable Holistic Sessions</h3>
             <p>
-              Available for organisations, corporates, schools, care facilities,
-              and various other groups.
+              Creative, wellness-focused sessions tailored to your needs,
+              drawing from themes like inner child work, chakras, mindfulness,
+              and nature-based rituals.{" "}
             </p>
           </div>
         </div>
