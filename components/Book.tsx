@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect, useRef, useCallback, useMemo } from "react"; // Added useCallback, useMemo
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import "../styles/book.scss";
@@ -12,7 +11,6 @@ declare global {
   }
 }
 
-// Moved outside to prevent recreation on every render
 const timeSlots = [
   { value: "09:00", label: "9:00 AM" },
   { value: "10:00", label: "10:00 AM" },
@@ -27,7 +25,7 @@ const timeSlots = [
 ];
 
 const Book = () => {
-  // Animation Refs
+  // ... (Keep all your existing refs and state as they are)
   const headingRef = useRef<HTMLDivElement>(null);
   const desRef = useRef<HTMLDivElement>(null);
   const formInputsRef = useRef<HTMLDivElement>(null);
@@ -51,21 +49,16 @@ const Book = () => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const [bookingId, setBookingId] = useState<number | null>(null);
 
+  // ... (Keep all your existing useEffects and handleInputChange, handleDateSelect, etc.)
+
   // Intersection Observer Logic
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    };
-
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animate-in");
-        }
+        if (entry.isIntersecting) entry.target.classList.add("animate-in");
       });
     }, observerOptions);
-
     const elements = [
       headingRef.current,
       desRef.current,
@@ -74,11 +67,9 @@ const Book = () => {
       calendarRef.current,
       ctaRef.current,
     ];
-
     elements.forEach((el) => {
       if (el) observer.observe(el);
     });
-
     return () => observer.disconnect();
   }, []);
 
@@ -114,7 +105,6 @@ const Book = () => {
   const handleDateSelect = useCallback((date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
-      // Normalize date to prevent timezone issues
       const offsetDate = new Date(
         date.getTime() - date.getTimezoneOffset() * 60000,
       );
@@ -142,7 +132,6 @@ const Book = () => {
       alert("Please fill all required fields");
       return;
     }
-
     setIsSubmitting(true);
     try {
       const res = await fetch("/api/bookings", {
@@ -150,42 +139,50 @@ const Book = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to submit booking");
-
       setBookingId(data.booking.id);
-      alert(
-        "Booking submitted successfully! Please proceed to payment to confirm your slot.",
-      );
+
+      // Update message based on service type
+      const successMsg =
+        formData.service === "group_session"
+          ? "Booking submitted! Please click 'Enquire on WhatsApp' to discuss details."
+          : "Booking submitted successfully! Please proceed to payment to confirm your slot.";
+
+      alert(successMsg);
     } catch (error: any) {
       console.error("Booking error:", error);
-      // More robust error message handling
-      const errorMessage =
-        error.message === "Validation failed"
-          ? "Please check your input details."
-          : error.message || "Failed to submit booking";
-      alert(errorMessage);
+      alert(error.message || "Failed to submit booking");
     } finally {
       setIsSubmitting(false);
     }
   }, [formData]);
 
+  // NEW: WhatsApp Redirect Handler
+  const handleWhatsAppRedirect = useCallback(() => {
+    const phoneNumber = "9148874678"; // REPLACE WITH YOUR ACTUAL NUMBER
+    const message = `Hi, I'm interested in a Group Session. 
+Name: ${formData.name}
+Date: ${formData.booking_date}
+Time: ${formData.booking_time}
+Booking ID: ${bookingId}`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
+      "_blank",
+    );
+  }, [formData, bookingId]);
+
   const handlePayNow = useCallback(async () => {
     if (!bookingId) return;
-
     setIsSubmitting(true);
     try {
-      // Create Razorpay Order
       const res = await fetch("/api/payment/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          bookingId,
-          service: formData.service,
-        }),
+        body: JSON.stringify({ bookingId, service: formData.service }),
       });
-
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
@@ -201,17 +198,11 @@ const Book = () => {
             const verifyRes = await fetch("/api/payment/verify", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                ...response,
-                booking_id: bookingId,
-              }),
+              body: JSON.stringify({ ...response, booking_id: bookingId }),
             });
-
             const verifyData = await verifyRes.json();
             if (!verifyRes.ok) throw new Error(verifyData.error);
-
             alert("Payment successful! Your booking is confirmed.");
-            // Reset form or redirect
             setFormData({
               name: "",
               email: "",
@@ -224,7 +215,6 @@ const Book = () => {
             setSelectedDate(undefined);
             setBookingId(null);
           } catch (error: any) {
-            console.error("Payment verification error:", error);
             alert("Payment verification failed. Please contact support.");
           }
         },
@@ -233,15 +223,11 @@ const Book = () => {
           email: formData.email,
           contact: formData.phone,
         },
-        theme: {
-          color: "#918a43",
-        },
+        theme: { color: "#918a43" },
       };
-
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error: any) {
-      console.error("Payment initiation error:", error);
       alert(error.message || "Failed to initiate payment");
     } finally {
       setIsSubmitting(false);
@@ -256,10 +242,10 @@ const Book = () => {
 
   return (
     <div className="booking-main">
+      {/* ... (Keep your JSX up until the CTA section) */}
       <div ref={headingRef} className="booking-heading scroll-animate">
         <h1>Book a Session</h1>
       </div>
-
       <div
         ref={desRef}
         className="booking-des scroll-animate"
@@ -269,6 +255,7 @@ const Book = () => {
       </div>
 
       <div className="booking-form">
+        {/* Form Inputs (Name, Email, etc.) */}
         <div ref={formInputsRef} className="booking-form-inputs scroll-animate">
           <div className="mb-6">
             <input
@@ -314,6 +301,7 @@ const Book = () => {
           </div>
         </div>
 
+        {/* Service Select */}
         <div
           ref={serviceRef}
           className="booking-form-service scroll-animate"
@@ -335,11 +323,11 @@ const Book = () => {
                 Environmental Session
               </option>
               <option value="customisable_session">Customisable Session</option>
-
             </select>
           </div>
         </div>
 
+        {/* Calendar */}
         <div
           ref={calendarRef}
           className="booking-calendar mb-8 scroll-animate"
@@ -366,6 +354,7 @@ const Book = () => {
           </div>
         </div>
 
+        {/* Time Selection Logic */}
         {selectedDate && (
           <div className="booking-time mb-8 animate-in-simple">
             <label
@@ -384,12 +373,7 @@ const Book = () => {
                     type="button"
                     onClick={() => !isBooked && handleTimeSelect(slot.value)}
                     disabled={isBooked}
-                    className={`p-3 rounded text-left transition-all ${isBooked
-                        ? "opacity-50 cursor-not-allowed bg-gray-200"
-                        : isSelected
-                          ? "bg-[#5A7C8A] text-white"
-                          : "bg-transparent border-2 border-[#918a43]"
-                      }`}
+                    className={`p-3 rounded text-left transition-all ${isBooked ? "opacity-50 cursor-not-allowed bg-gray-200" : isSelected ? "bg-[#5A7C8A] text-white" : "bg-transparent border-2 border-[#918a43]"}`}
                     style={{
                       fontFamily: "helvetica",
                       color: isBooked
@@ -410,6 +394,7 @@ const Book = () => {
           </div>
         )}
 
+        {/* CTA Section - MODIFIED LOGIC HERE */}
         <div
           ref={ctaRef}
           className="booking-cta scroll-animate"
@@ -435,15 +420,30 @@ const Book = () => {
                     ? "PROCESSING..."
                     : "SUBMIT"}
               </button>
+
               {bookingId && (
-                <button
-                  onClick={handlePayNow}
-                  disabled={isSubmitting}
-                  className="w-full py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
-                  style={{ backgroundColor: "#918a43", color: "#f5e6b3" }}
-                >
-                  {isSubmitting ? "PROCESSING..." : "CONFIRM & PAY"}
-                </button>
+                <>
+                  {formData.service === "group_session" ? (
+                    // SHOW THIS BUTTON FOR GROUP SESSIONS
+                    <button
+                      onClick={handleWhatsAppRedirect}
+                      className="w-full py-2 rounded transition-all duration-300 hover:opacity-90"
+                      style={{ backgroundColor: "#918a43", color: "#fff" }} // Standard WhatsApp Green
+                    >
+                      ENQUIRE ON WHATSAPP
+                    </button>
+                  ) : (
+                    // SHOW THIS BUTTON FOR ALL OTHER SERVICES
+                    <button
+                      onClick={handlePayNow}
+                      disabled={isSubmitting}
+                      className="w-full py-2 rounded transition-all duration-300 hover:opacity-90 disabled:opacity-50"
+                      style={{ backgroundColor: "#918a43", color: "#f5e6b3" }}
+                    >
+                      {isSubmitting ? "PROCESSING..." : "CONFIRM & PAY"}
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>
